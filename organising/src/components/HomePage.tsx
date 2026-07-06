@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import PortfolioNav from './ui/PortfolioNav';
 import PortfolioWorkSection from './PortfolioWorkSection';
 import InfoOverlay from './ui/InfoOverlay';
+import heroComicImg from '../assets/images/home/hero-comic.png';
 
 export default function HomePage() {
   const [isNavVisible, setIsNavVisible] = useState(true);
@@ -76,6 +77,12 @@ export default function HomePage() {
             I design AI-powered experiences that make complex journeys easier to start and easier to complete.
           </h1>
         </div>
+        <img
+          className="portfolio-hero-comic"
+          src={heroComicImg}
+          alt=""
+          aria-hidden="true"
+        />
       </section>
 
       <PortfolioWorkSection />

@@ -1875,6 +1875,17 @@ body {
   animation: hero-title-in 900ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.portfolio-hero-comic {
+  position: absolute;
+  right: clamp(24px, 2.4vw, 46px);
+  bottom: clamp(34px, 4.2vw, 72px);
+  z-index: 2;
+  width: clamp(120px, 10.5vw, 190px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
 .work-section {
   --work-inline-padding: clamp(18px, 2.2vw, 34px);
   --work-sidebar-width: clamp(300px, 24vw, 360px);
@@ -2683,6 +2694,12 @@ body {
     max-width: 100%;
     font-size: var(--case-display-sm-size);
     line-height: 1.02;
+  }
+
+  .portfolio-hero-comic {
+    right: var(--space-page-x);
+    bottom: var(--space-component-lg);
+    width: clamp(86px, 27vw, 124px);
   }
 
   .info-panel {
