@@ -73,8 +73,7 @@ export default function HomePage() {
       <section className="portfolio-hero" id="top">
         <div className="portfolio-hero-copy">
           <h1>
-            I simplify complex user journeys with AI, helping people complete critical tasks faster and with greater
-            confidence.
+            I design AI-powered experiences that make complex journeys easier to start and easier to complete.
           </h1>
         </div>
       </section>
