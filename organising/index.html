@@ -10,7 +10,8 @@
         --page-loader-surface: var(--surface-base, #ffffff);
         --page-loader-ink: var(--text-hero-display, #0a0a0a);
         --page-loader-track: rgba(10, 10, 10, 0.12);
-        --page-loader-threshold: 300ms;
+        --page-loader-threshold: 600ms;
+        --page-loader-min-visible: 650ms;
         --page-loader-progress-duration: 4000ms;
         --page-loader-exit-hold: 150ms;
         --page-loader-exit-duration: 700ms;
@@ -130,6 +131,7 @@
           return raw.endsWith('ms') ? value : value * 1000;
         };
         const threshold = readMs('--page-loader-threshold', 300);
+        const minVisible = readMs('--page-loader-min-visible', 650);
         const duration = readMs('--page-loader-progress-duration', 4000);
         const exitHold = readMs('--page-loader-exit-hold', 150);
         const exitDuration = readMs('--page-loader-exit-duration', 700);
@@ -138,6 +140,7 @@
         let done = false;
         let raf = 0;
         let startedAt = 0;
+        let shownAt = 0;
         let loader;
         let count;
 
@@ -154,12 +157,16 @@
           cancelAnimationFrame(raf);
           window.__finishPageLoader = finish;
           if (!shown || !loader) return;
-          setProgress(100);
+          const visibleFor = performance.now() - shownAt;
+          const finishDelay = reduceMotion ? 0 : Math.max(0, minVisible - visibleFor);
           setTimeout(() => {
-            loader.dataset.done = 'true';
-            loader.style.pointerEvents = 'none';
-            setTimeout(() => loader?.remove(), reduceMotion ? 120 : exitDuration);
-          }, exitHold);
+            setProgress(100);
+            setTimeout(() => {
+              loader.dataset.done = 'true';
+              loader.style.pointerEvents = 'none';
+              setTimeout(() => loader?.remove(), reduceMotion ? 120 : exitDuration);
+            }, exitHold);
+          }, finishDelay);
         };
 
         const tick = (time) => {
@@ -174,6 +181,7 @@
         const show = () => {
           if (done || shown) return;
           shown = true;
+          shownAt = performance.now();
           document.body.insertAdjacentHTML(
             'afterbegin',
             '<div id="page-loader" aria-hidden="true"><div class="page-loader__inner"><div class="page-loader__meter"><div class="page-loader__bar"></div></div><div class="page-loader__count">0%</div></div></div>'
