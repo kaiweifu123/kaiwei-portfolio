@@ -8,11 +8,10 @@ import PortfolioNav from './ui/PortfolioNav';
 import InfoOverlay from './ui/InfoOverlay';
 import Lightbox from './ui/Lightbox';
 import ProjectPager from './ui/ProjectPager';
-import { prefetchInternalHref, useMediaLoadedClass } from './ui/mediaLoading';
+import { prefetchInternalHref, useInViewVideo, useMediaLoadedClass } from './ui/mediaLoading';
 
-type CargoMedia = {
-  hash: string;
-  name: string;
+type IllustrationMedia = {
+  src: string;
   width: number;
   height: number;
   mime: string;
@@ -25,156 +24,117 @@ export type IllustrationProject = {
   theme: string;
   medium: string;
   year: string;
-  cover: CargoMedia;
-  media: CargoMedia[];
+  cover: IllustrationMedia;
+  media: IllustrationMedia[];
 };
 
 export const illustrationProjects: IllustrationProject[] = [
   {
-    slug: 'kodak',
-    title: 'Gender Equality Through the Lens of Kodak',
-    description:
-      "Illustrations exploring photography's role in expanding women's visibility, participation, and economic agency.",
-    theme: 'Editorial narrative',
-    medium: 'Digital illustration',
-    year: '2020',
-    cover: { hash: 'B2011028102463208200148059635998', name: '01.jpg', width: 3508, height: 2480, mime: 'image/jpeg' },
+    slug: "kodak",
+    title: "Gender Equality Through the Lens of Kodak",
+    description: "Illustrations exploring photography's role in expanding women's visibility, participation, and economic agency.",
+    theme: "Editorial narrative",
+    medium: "Digital illustration",
+    year: "2020",
+    cover: { src: "/illustration/kodak/cover.jpg", width: 3508, height: 2480, mime: "image/jpeg" },
     media: [
-      { hash: 'B2011028102463208200148059635998', name: '01.jpg', width: 3508, height: 2480, mime: 'image/jpeg' },
-      { hash: 'H2011028549390923617983076188446', name: '02.jpg', width: 3508, height: 2480, mime: 'image/jpeg' },
-      { hash: 'K2011028789881126106934500606238', name: '03.jpg', width: 3508, height: 2480, mime: 'image/jpeg' },
-      { hash: 'W2011029125648761736595759120670', name: '04.jpg', width: 3508, height: 2480, mime: 'image/jpeg' },
+      { src: "/illustration/kodak/01.jpg", width: 3508, height: 2480, mime: "image/jpeg" },
+      { src: "/illustration/kodak/02.jpg", width: 3508, height: 2480, mime: "image/jpeg" },
+      { src: "/illustration/kodak/03.jpg", width: 3508, height: 2480, mime: "image/jpeg" },
+      { src: "/illustration/kodak/04.jpg", width: 3508, height: 2480, mime: "image/jpeg" },
     ],
   },
   {
-    slug: 'london-tube-sketch',
-    title: 'London Tube Sketch',
-    description:
-      "Quick sketches from London Tube journeys, capturing fleeting moments and the city's everyday faces below the surface.",
-    theme: 'Tube sketchbook',
-    medium: 'Scanned sketch series',
-    year: '2022',
-    cover: {
-      hash: 'V2009278880935960839872101695774',
-      name: 'scan_20034120_2022-10-13-13-47-03_1_edited.jpg',
-      width: 2868,
-      height: 1822,
-      mime: 'image/jpeg',
-    },
+    slug: "london-tube-sketch",
+    title: "London Tube Sketch",
+    description: "Quick sketches from London Tube journeys, capturing fleeting moments and the city's everyday faces below the surface.",
+    theme: "Tube sketchbook",
+    medium: "Scanned sketch series",
+    year: "2022",
+    cover: { src: "/illustration/london-tube-sketch/cover.jpg", width: 2868, height: 1822, mime: "image/jpeg" },
     media: [
-      {
-        hash: 'V2009278880935960839872101695774',
-        name: 'scan_20034120_2022-10-13-13-47-03_1_edited.jpg',
-        width: 2868,
-        height: 1822,
-        mime: 'image/jpeg',
-      },
-      {
-        hash: 'X2009280514100000661673544466718',
-        name: 'scan_20034120_2022-10-10-21-21-38_page-0001.jpg',
-        width: 2394,
-        height: 1489,
-        mime: 'image/jpeg',
-      },
-      {
-        hash: 'D2009281652337896985847717380382',
-        name: 'scan_20034120_2022-10-13-19-14-03_1.jpeg',
-        width: 4792,
-        height: 2856,
-        mime: 'image/jpeg',
-      },
-      {
-        hash: 'J2009281238540533924395055530270',
-        name: 'scan_20034120_2022-10-13-13-47-03_2.jpeg',
-        width: 4867,
-        height: 2876,
-        mime: 'image/jpeg',
-      },
+      { src: "/illustration/london-tube-sketch/01.jpg", width: 2868, height: 1822, mime: "image/jpeg" },
+      { src: "/illustration/london-tube-sketch/02.jpg", width: 2394, height: 1489, mime: "image/jpeg" },
+      { src: "/illustration/london-tube-sketch/03.jpg", width: 4792, height: 2856, mime: "image/jpeg" },
+      { src: "/illustration/london-tube-sketch/04.jpg", width: 4867, height: 2876, mime: "image/jpeg" },
     ],
   },
   {
-    slug: 'moments-from-the-tube',
-    title: 'Moments from the Tube',
-    description:
-      'People encountered during daily Tube travel, capturing quiet narratives that unfold in shared underground spaces.',
-    theme: 'Observed commute',
-    medium: 'Photo collage and digital drawing',
-    year: '2022',
-    cover: { hash: 'O2011154421210279176951266754846', name: '.jpg', width: 2388, height: 1397, mime: 'image/jpeg' },
+    slug: "moments-from-the-tube",
+    title: "Moments from the Tube",
+    description: "People encountered during daily Tube travel, capturing quiet narratives that unfold in shared underground spaces.",
+    theme: "Observed commute",
+    medium: "Photo collage and digital drawing",
+    year: "2022",
+    cover: { src: "/illustration/moments-from-the-tube/cover.jpg", width: 2388, height: 1397, mime: "image/jpeg" },
     media: [
-      { hash: 'O2011154421210279176951266754846', name: '.jpg', width: 2388, height: 1397, mime: 'image/jpeg' },
-      { hash: 'P2011155134877913900626399674654', name: 'IMG_2804.jpg', width: 1653, height: 1668, mime: 'image/jpeg' },
-      { hash: 'M2011155065075434325709456359710', name: 'IMG_2766.JPG', width: 2388, height: 1668, mime: 'image/jpeg' },
-      { hash: 'B2011154885791528673326324203806', name: 'IMG_2757.JPG', width: 2388, height: 1668, mime: 'image/jpeg' },
-      { hash: 'R2011154838125141986860842828062', name: 'IMG_2752.JPG', width: 2388, height: 1668, mime: 'image/jpeg' },
-      { hash: 'K2011155001083679134011021803806', name: 'IMG_2763.JPG', width: 2388, height: 1668, mime: 'image/jpeg' },
-      { hash: 'I2011154778781966301737215279390', name: 'IMG_2743.JPG', width: 2388, height: 1668, mime: 'image/jpeg' },
-      { hash: 'O2011154709828036954210911338782', name: 'IMG_2741.JPG', width: 2388, height: 1668, mime: 'image/jpeg' },
+      { src: "/illustration/moments-from-the-tube/01.jpg", width: 2388, height: 1397, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/02.jpg", width: 1653, height: 1668, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/03.jpg", width: 2388, height: 1668, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/04.jpg", width: 2388, height: 1668, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/05.jpg", width: 2388, height: 1668, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/06.jpg", width: 2388, height: 1668, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/07.jpg", width: 2388, height: 1668, mime: "image/jpeg" },
+      { src: "/illustration/moments-from-the-tube/08.jpg", width: 2388, height: 1668, mime: "image/jpeg" },
     ],
   },
   {
-    slug: 'london-life',
-    title: 'The Faces of London Life',
-    description:
-      'Animated observations from daily Tube journeys, capturing the small rituals and shared rhythms of London life.',
-    theme: 'Observed city life',
-    medium: 'Animated GIF series',
-    year: '2020',
-    cover: { hash: 'D2011068580651791231007328518430', name: 'IMG_3100.GIF', width: 2388, height: 1668, mime: 'image/gif' },
+    slug: "london-life",
+    title: "The Faces of London Life",
+    description: "Animated observations from daily Tube journeys, capturing the small rituals and shared rhythms of London life.",
+    theme: "Observed city life",
+    medium: "Animated GIF series",
+    year: "2020",
+    cover: { src: "/illustration/london-life/cover.mp4", width: 2388, height: 1668, mime: "video/mp4" },
     media: [
-      { hash: 'D2011068580651791231007328518430', name: 'IMG_3100.GIF', width: 2388, height: 1668, mime: 'image/gif' },
-      { hash: 'J2011068580393536813975394795806', name: 'IMG_2776.GIF', width: 2388, height: 1668, mime: 'image/gif' },
-      { hash: 'W2011068580504217278417652105502', name: 'IMG_3092.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'H2011068580522664022491361657118', name: 'IMG_3093.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'S2011068579378965889921369456926', name: 'ezgif-4-fb30c47869.gif', width: 2388, height: 1668, mime: 'image/gif' },
-      { hash: 'X2011068580411983558049104347422', name: 'IMG_2789.GIF', width: 2048, height: 2048, mime: 'image/gif' },
-      { hash: 'V2011068580430430302122813899038', name: 'IMG_2833.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'T2011068580578004254712490311966', name: 'IMG_3096.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'R2011068580467323790270233002270', name: 'IMG_3090.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'I2011068580485770534343942553886', name: 'IMG_3091.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'U2011068580614897742859909415198', name: 'IMG_3098.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'C2011068580633344486933618966814', name: 'IMG_3099.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'L2011068580559557510638780760350', name: 'IMG_3095.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'P2011068580448877046196523450654', name: 'IMG_3089.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'R2011068580541110766565071208734', name: 'IMG_3094.GIF', width: 1668, height: 2388, mime: 'image/gif' },
-      { hash: 'T2011068580596450998786199863582', name: 'IMG_3097.GIF', width: 1668, height: 2388, mime: 'image/gif' },
+      { src: "/illustration/london-life/01.mp4", width: 2388, height: 1668, mime: "video/mp4" },
+      { src: "/illustration/london-life/02.mp4", width: 2388, height: 1668, mime: "video/mp4" },
+      { src: "/illustration/london-life/03.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/04.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/05.mp4", width: 2388, height: 1668, mime: "video/mp4" },
+      { src: "/illustration/london-life/06.mp4", width: 2048, height: 2048, mime: "video/mp4" },
+      { src: "/illustration/london-life/07.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/08.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/09.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/10.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/11.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/12.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/13.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/14.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/15.mp4", width: 1668, height: 2388, mime: "video/mp4" },
+      { src: "/illustration/london-life/16.mp4", width: 1668, height: 2388, mime: "video/mp4" },
     ],
   },
   {
-    slug: 'tarot',
-    title: 'Tarot Drawing',
-    description:
-      'A personal tarot set exploring symbolism, emotion, intuition, desire, control, self-esteem, and chaos.',
-    theme: 'Symbolic system',
-    medium: 'Drawing series',
-    year: '2020',
-    cover: { hash: 'K2011122991666173134690932965662', name: '17938551532793946.jpg', width: 1440, height: 1687, mime: 'image/jpeg' },
+    slug: "tarot",
+    title: "Tarot Drawing",
+    description: "A personal tarot set exploring symbolism, emotion, intuition, desire, control, self-esteem, and chaos.",
+    theme: "Symbolic system",
+    medium: "Drawing series",
+    year: "2020",
+    cover: { src: "/illustration/tarot/cover.jpg", width: 1440, height: 1687, mime: "image/jpeg" },
     media: [
-      { hash: 'K2011122991666173134690932965662', name: '17938551532793946.jpg', width: 1440, height: 1687, mime: 'image/jpeg' },
-      { hash: 'C2011122991684619878764642517278', name: '18270674368048987.jpg', width: 1440, height: 1687, mime: 'image/jpeg' },
-      { hash: 'F2011122991352578485437870588190', name: '17894812040416437.jpg', width: 1440, height: 1687, mime: 'image/jpeg' },
-      { hash: 'I2011122991703066622838352068894', name: 'IMG_9164.JPG', width: 6613, height: 3288, mime: 'image/jpeg' },
+      { src: "/illustration/tarot/01.jpg", width: 1440, height: 1687, mime: "image/jpeg" },
+      { src: "/illustration/tarot/02.jpg", width: 1440, height: 1687, mime: "image/jpeg" },
+      { src: "/illustration/tarot/03.jpg", width: 1440, height: 1687, mime: "image/jpeg" },
+      { src: "/illustration/tarot/04.jpg", width: 6613, height: 3288, mime: "image/jpeg" },
     ],
   },
   {
-    slug: 'autonomous-archive',
-    title: 'Autonomous Archive',
-    description:
-      'Notebook excerpts combining illustration and writing around self-identity, growth, and social observation.',
-    theme: 'Personal archive',
-    medium: 'Notebook excerpts',
-    year: '2020',
-    cover: { hash: 'E2011190869560045353369308709150', name: '8.jpg', width: 7066, height: 2480, mime: 'image/jpeg' },
+    slug: "autonomous-archive",
+    title: "Autonomous Archive",
+    description: "Notebook excerpts combining illustration and writing around self-identity, growth, and social observation.",
+    theme: "Personal archive",
+    medium: "Notebook excerpts",
+    year: "2020",
+    cover: { src: "/illustration/autonomous-archive/cover.jpg", width: 7066, height: 2480, mime: "image/jpeg" },
     media: [
-      { hash: 'E2011190869560045353369308709150', name: '8.jpg', width: 7066, height: 2480, mime: 'image/jpeg' },
-      { hash: 'R2011190869154216983747698573598', name: '7.jpg', width: 3985, height: 2480, mime: 'image/jpeg' },
-      { hash: 'S2011190869578492097443018260766', name: '9.jpg', width: 3106, height: 2480, mime: 'image/jpeg' },
+      { src: "/illustration/autonomous-archive/01.jpg", width: 7066, height: 2480, mime: "image/jpeg" },
+      { src: "/illustration/autonomous-archive/02.jpg", width: 3985, height: 2480, mime: "image/jpeg" },
+      { src: "/illustration/autonomous-archive/03.jpg", width: 3106, height: 2480, mime: "image/jpeg" },
     ],
   },
 ];
-
-const cargoAssetUrl = (media: CargoMedia, width = 1600) =>
-  `https://freight.cargo.site/w/${width}/i/${media.hash}/${encodeURIComponent(media.name)}`;
 
 function IllustrationNav({ onAboutClick }: { onAboutClick: () => void }) {
   return <PortfolioNav onAboutClick={onAboutClick} />;
@@ -204,8 +164,8 @@ export default function IllustrationPage() {
               onMouseEnter={() => prefetchInternalHref(`/illustration/${project.slug}`)}
               onTouchStart={() => prefetchInternalHref(`/illustration/${project.slug}`)}
             >
-              <IllustrationImage
-                src={cargoAssetUrl(project.cover, project.cover.mime === 'image/gif' ? 760 : 1400)}
+              <IllustrationMediaFrame
+                media={project.cover}
                 alt={`${project.title} preview`}
                 loading="lazy"
               />
@@ -263,46 +223,28 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
       </section>
 
       {featuredMedia ? (
-        <figure className="illustration-feature-media media-skeleton">
-          <button
-            className="zoomable-image-trigger"
-            type="button"
-            onClick={() => setLightboxImage({
-              src: cargoAssetUrl(featuredMedia, 1800),
-              alt: `${project.title} featured artwork`,
-            })}
-            aria-label={`Open image preview: ${project.title} featured artwork`}
-          >
-            <img
-              src={cargoAssetUrl(featuredMedia, 1800)}
-              alt={`${project.title} featured artwork`}
-              loading="eager"
-              decoding="async"
-            />
-          </button>
-        </figure>
+        <IllustrationMediaFrame
+          className="illustration-feature-media"
+          media={featuredMedia}
+          alt={`${project.title} featured artwork`}
+          loading="eager"
+          onPreview={featuredMedia.mime.startsWith('image/')
+            ? () => setLightboxImage({ src: featuredMedia.src, alt: `${project.title} featured artwork` })
+            : undefined}
+        />
       ) : null}
 
       <section className="illustration-project-gallery illustration-detail-gallery" aria-label={`${project.title} artworks`}>
         {galleryMedia.map((media, index) => (
-          <figure className="illustration-project-media media-skeleton" key={`${project.slug}-${media.hash}-${index}`}>
-            <button
-              className="zoomable-image-trigger"
-              type="button"
-              onClick={() => setLightboxImage({
-                src: cargoAssetUrl(media, media.mime === 'image/gif' ? 760 : 1400),
-                alt: `${project.title} artwork ${index + 1}`,
-              })}
-              aria-label={`Open image preview: ${project.title} artwork ${index + 1}`}
-            >
-              <img
-                src={cargoAssetUrl(media, media.mime === 'image/gif' ? 760 : 1400)}
-                alt={`${project.title} artwork ${index + 1}`}
-                loading={index < 2 ? 'eager' : 'lazy'}
-                decoding="async"
-              />
-            </button>
-          </figure>
+          <IllustrationMediaFrame
+            className="illustration-project-media"
+            media={media}
+            alt={`${project.title} artwork ${index + 1}`}
+            loading={index < 2 ? 'eager' : 'lazy'}
+            onPreview={media.mime.startsWith('image/')
+              ? () => setLightboxImage({ src: media.src, alt: `${project.title} artwork ${index + 1}` })
+              : undefined}
+          />
         ))}
       </section>
 
@@ -319,27 +261,64 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
   );
 }
 
-function IllustrationImage({
-  src,
+function IllustrationMediaFrame({
+  className,
+  media,
   alt,
   loading,
+  onPreview,
 }: {
-  src: string;
+  className?: string;
+  media: IllustrationMedia;
   alt: string;
   loading: 'eager' | 'lazy';
+  onPreview?: () => void;
 }) {
   const mediaLoaded = useMediaLoadedClass();
+  const videoRef = useInViewVideo<HTMLVideoElement>(media.mime.startsWith('video/'));
+  const style = { aspectRatio: `${media.width} / ${media.height}` };
+
+  if (media.mime.startsWith('video/')) {
+    return (
+      <figure className={`${className ?? ''} media-skeleton`.trim()} style={style}>
+        <video
+          ref={videoRef}
+          src={media.src}
+          aria-label={alt}
+          muted
+          loop
+          playsInline
+          preload="none"
+          className={`media-fade ${mediaLoaded.className}`.trim()}
+          onLoadedData={mediaLoaded.onLoadedData}
+        />
+      </figure>
+    );
+  }
+
+  const image = (
+    <img
+      src={media.src}
+      alt={alt}
+      loading={loading}
+      decoding="async"
+      className={`media-fade ${mediaLoaded.className}`.trim()}
+      onLoad={mediaLoaded.onLoad}
+    />
+  );
 
   return (
-    <figure className="media-skeleton">
-      <img
-        src={src}
-        alt={alt}
-        loading={loading}
-        decoding="async"
-        className={`media-fade ${mediaLoaded.className}`.trim()}
-        onLoad={mediaLoaded.onLoad}
-      />
+    <figure className={`${className ?? ''} media-skeleton`.trim()} style={style}>
+      {onPreview ? (
+        <button
+          className="zoomable-image-trigger"
+          type="button"
+          onClick={onPreview}
+          aria-label={`Open image preview: ${alt}`}
+        >
+          {image}
+        </button>
+      ) : image}
     </figure>
   );
 }
