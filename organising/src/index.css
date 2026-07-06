@@ -2402,6 +2402,18 @@ body {
   text-transform: none;
 }
 
+.portfolio-pill-link {
+  text-decoration: none;
+  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.portfolio-pill-link:hover,
+.portfolio-pill-link:focus-visible {
+  border-color: rgb(23 21 20 / 0.42);
+  color: var(--text-strong);
+  transform: translateY(-1px);
+}
+
 @keyframes hero-title-in {
   from {
     opacity: 0;

@@ -342,6 +342,7 @@ export default function PortfolioCasePage({ caseStudy }: PortfolioCasePageProps)
           subtitle={caseStudy.subtitle}
           subtitleHighlight={caseStudy.subtitleHighlight}
           chips={caseStudy.chips}
+          productLink={caseStudy.productLink}
           meta={caseStudy.meta}
           artifact={{
             type: 'image',

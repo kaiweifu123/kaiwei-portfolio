@@ -107,6 +107,10 @@ export interface PortfolioCase {
   subtitle?: string;
   subtitleHighlight?: string;
   chips: string[];
+  productLink?: {
+    label: string;
+    href: string;
+  };
   hero: {
     src: string;
     alt: string;
@@ -130,6 +134,10 @@ export const portfolioCases = [
       "AI CV builder",
       "Jobseekers"
     ],
+    "productLink": {
+      "label": "View product",
+      "href": "https://gethireable.com/"
+    },
     "hero": {
       "src": "/case-assets/hireable/assets/figma/extracted/hero-handheld-ipad-2.jpg",
       "alt": "Hireable product shown on an iPad",

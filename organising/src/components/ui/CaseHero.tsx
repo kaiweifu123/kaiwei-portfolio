@@ -38,6 +38,10 @@ type CaseHeroProps = {
   subtitle?: React.ReactNode;
   subtitleHighlight?: string;
   chips?: string[];
+  productLink?: {
+    label: string;
+    href: string;
+  };
   meta?: MetaGridItem[];
   artifact: CaseHeroArtifact;
 };
@@ -63,6 +67,7 @@ function HeroCopy({
   subtitle,
   subtitleHighlight,
   chips = [],
+  productLink,
   meta = [],
   variant,
 }: Omit<CaseHeroProps, 'artifact'>) {
@@ -86,13 +91,23 @@ function HeroCopy({
             : subtitle}
         </p>
       ) : null}
-      {chips.length ? (
+      {chips.length || productLink ? (
         <div className="mt-[var(--space-2xl)] flex flex-wrap justify-center gap-[var(--space-sm)]" aria-label="Project metadata">
           {chips.map((chip) => (
             <span key={chip} className="inline-flex">
               <Pill>{chip}</Pill>
             </span>
           ))}
+          {productLink ? (
+            <a
+              className="portfolio-pill portfolio-pill-link"
+              href={productLink.href}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {productLink.label} -&gt;
+            </a>
+          ) : null}
         </div>
       ) : null}
       {meta.length ? (
@@ -181,12 +196,12 @@ function ShowcaseArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
   );
 }
 
-export default function CaseHero({ variant, title, subtitle, subtitleHighlight, chips = [], meta = [], artifact }: CaseHeroProps) {
+export default function CaseHero({ variant, title, subtitle, subtitleHighlight, chips = [], productLink, meta = [], artifact }: CaseHeroProps) {
   if (variant === 'editorial') {
     return (
       <section className="case-hero-editorial">
         <div className="case-hero-editorial-copy-panel">
-          <HeroCopy variant={variant} title={title} subtitle={subtitle} subtitleHighlight={subtitleHighlight} chips={chips} meta={meta} />
+          <HeroCopy variant={variant} title={title} subtitle={subtitle} subtitleHighlight={subtitleHighlight} chips={chips} productLink={productLink} meta={meta} />
         </div>
         <EditorialArtifact artifact={artifact} />
       </section>
@@ -196,7 +211,7 @@ export default function CaseHero({ variant, title, subtitle, subtitleHighlight, 
   return (
     <section className="case-hero-showcase">
       <div className="case-hero-showcase-copy-panel">
-        <HeroCopy variant={variant} title={title} subtitle={subtitle} chips={chips} meta={meta} />
+        <HeroCopy variant={variant} title={title} subtitle={subtitle} chips={chips} productLink={productLink} meta={meta} />
       </div>
       <ShowcaseArtifact artifact={artifact} />
     </section>
