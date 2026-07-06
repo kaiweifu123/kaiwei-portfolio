@@ -22,11 +22,13 @@ export const caseStudyPagerItems: ProjectPagerItem[] = [
     title: 'Patient CRM',
     href: '/patient-crm/',
   },
-  ...portfolioCases.map((caseStudy) => ({
-    id: caseStudy.slug,
-    title: caseStudy.title,
-    href: `/case/${caseStudy.slug}/`,
-  })),
+  ...portfolioCases
+    .filter((caseStudy) => caseStudy.slug !== 'fuze')
+    .map((caseStudy) => ({
+      id: caseStudy.slug,
+      title: caseStudy.title,
+      href: `/case/${caseStudy.slug}/`,
+    })),
 ];
 
 export const getAdjacentPagerItems = (items: ProjectPagerItem[], currentId: string) => {
