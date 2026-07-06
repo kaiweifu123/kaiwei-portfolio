@@ -3033,6 +3033,11 @@ body {
   background: var(--surface-base);
 }
 
+.case-hero-editorial-figure.media-skeleton:has(.is-loaded),
+.case-hero-showcase-artifact.media-skeleton:has(.is-loaded) {
+  background: transparent;
+}
+
 .media-fade {
   opacity: 0;
   transition: opacity 220ms ease-out;
