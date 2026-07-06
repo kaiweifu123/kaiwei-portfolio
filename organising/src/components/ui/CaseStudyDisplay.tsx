@@ -341,7 +341,7 @@ export function DesignProcessTabs({
         {activeTab === 3 ? (
           <div className="case-narrative-flow">
             <span className="case-caption-label block">Step 4</span>
-            <h3 className="case-design-process-title">refinement</h3>
+            <h3 className="case-design-process-title">Refinement</h3>
             <span className="case-caption-label block">Operational feedback & evolution</span>
             <p className="case-card-support">
               Once the system entered real workflows, the structure continued evolving based on operational feedback,
