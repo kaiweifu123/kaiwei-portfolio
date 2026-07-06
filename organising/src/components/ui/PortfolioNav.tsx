@@ -24,6 +24,11 @@ const productDesignLinks = [
   { label: 'The Future of TfL Go', href: '/case/tfl-go/' },
 ];
 
+const normalizePath = (path: string) => {
+  const clean = path.replace(/\/+$/, '');
+  return clean === '' ? '/' : clean;
+};
+
 export default function PortfolioNav({
   isVisible = true,
   homeHref = '/',
@@ -35,6 +40,9 @@ export default function PortfolioNav({
 }: PortfolioNavProps) {
   const visibilityClass = isVisible ? 'is-visible' : 'is-hidden';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const currentPath =
+    typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '';
+  const isCurrentPage = (href: string) => normalizePath(href) === currentPath;
 
   const handleAboutClick = () => {
     setIsMenuOpen(false);
@@ -62,8 +70,21 @@ export default function PortfolioNav({
         </span>
       </button>
       <nav id="portfolio-primary-nav" className={isMenuOpen ? 'is-open' : ''}>
-        <span className="nav-mobile-section-label">Navigation</span>
         <a className="nav-mobile-only" href={homeHref} onClick={() => setIsMenuOpen(false)}>Home</a>
+        <div className="nav-mobile-case-list" aria-label="Case studies">
+          <span className="nav-mobile-section-label">Case studies</span>
+          {productDesignLinks.map((link) => (
+            <a
+              href={link.href}
+              key={link.href}
+              className={isCurrentPage(link.href) ? 'is-current' : undefined}
+              aria-current={isCurrentPage(link.href) ? 'page' : undefined}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
         <div className="nav-menu">
           <a className="nav-menu-trigger" href={workHref} aria-haspopup="true" onClick={() => setIsMenuOpen(false)}>
             Product design
@@ -78,17 +99,18 @@ export default function PortfolioNav({
         </div>
         <a href={illustrationHref} onClick={() => setIsMenuOpen(false)}>Illustration</a>
         {onAboutClick ? (
-          <button type="button" onClick={handleAboutClick}>About</button>
+          <button className="nav-desktop-about" type="button" onClick={handleAboutClick}>About</button>
         ) : (
-          <a href={aboutHref} onClick={() => setIsMenuOpen(false)}>About</a>
+          <a className="nav-desktop-about" href={aboutHref} onClick={() => setIsMenuOpen(false)}>About</a>
         )}
-        <div className="nav-mobile-case-list" aria-label="Case studies">
-          <span className="nav-mobile-section-label">Case studies</span>
-          {productDesignLinks.map((link) => (
-            <a href={link.href} key={link.href} onClick={() => setIsMenuOpen(false)}>
-              {link.label}
-            </a>
-          ))}
+        <div className="nav-mobile-footer">
+          {onAboutClick ? (
+            <button type="button" onClick={handleAboutClick}>About</button>
+          ) : (
+            <a href={aboutHref} onClick={() => setIsMenuOpen(false)}>About</a>
+          )}
+          <span aria-hidden="true">·</span>
+          <a href="/cv/kaiwei-yu-cv.pdf" download onClick={() => setIsMenuOpen(false)}>Download CV</a>
         </div>
       </nav>
     </header>
