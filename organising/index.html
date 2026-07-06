@@ -17,13 +17,13 @@
         --page-loader-ease: cubic-bezier(0.16, 1, 0.3, 1);
         --page-loader-edge: clamp(18px, 2.4vw, 40px);
         --page-loader-line-top: 55vh;
+        --page-loader-curve-depth: clamp(96px, 14vw, 260px);
       }
 
       #page-loader {
         position: fixed;
         inset: 0;
         z-index: 2147483000;
-        background: var(--page-loader-surface);
         color: var(--page-loader-ink);
         opacity: 0;
         pointer-events: none;
@@ -32,6 +32,15 @@
           opacity 160ms var(--page-loader-ease),
           transform var(--page-loader-exit-duration) var(--page-loader-ease);
         will-change: transform;
+      }
+
+      #page-loader::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 calc(var(--page-loader-curve-depth) * -1);
+        background: var(--page-loader-surface);
+        border-bottom-right-radius: 50% var(--page-loader-curve-depth);
+        border-bottom-left-radius: 50% var(--page-loader-curve-depth);
       }
 
       #page-loader[data-visible="true"] {
@@ -45,6 +54,7 @@
       .page-loader__inner {
         position: absolute;
         inset: 0;
+        z-index: 1;
       }
 
       .page-loader__meter {
