@@ -1866,18 +1866,6 @@ body {
   animation: hero-title-in 900ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.portfolio-hero::after {
-  position: absolute;
-  right: clamp(52px, 7vw, 150px);
-  bottom: clamp(68px, 10vw, 150px);
-  width: clamp(16px, 1.2vw, 24px);
-  height: clamp(16px, 1.2vw, 24px);
-  border-radius: var(--radius-pill);
-  background: #050505;
-  content: "";
-  animation: dot-pulse 1.8s ease-in-out infinite;
-}
-
 .work-section {
   --work-inline-padding: clamp(18px, 2.2vw, 34px);
   --work-sidebar-width: clamp(300px, 24vw, 360px);
@@ -2554,17 +2542,6 @@ body {
     max-width: 100%;
     font-size: var(--case-display-sm-size);
     line-height: 1.02;
-  }
-
-  .portfolio-hero::after {
-    left: 50%;
-    right: auto;
-    bottom: clamp(22px, 7vw, 32px);
-    width: 10px;
-    height: 10px;
-    opacity: 0.42;
-    transform: translateX(-50%);
-    animation-name: mobile-dot-pulse;
   }
 
   .info-panel {
