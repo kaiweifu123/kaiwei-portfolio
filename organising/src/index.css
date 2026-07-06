@@ -846,7 +846,6 @@ body {
 }
 
 .case-design-process-body {
-  min-height: 420px;
   padding: var(--space-card-lg);
 }
 
