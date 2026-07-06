@@ -50,12 +50,12 @@ export default function PortfolioNav({
       <button
         className={`nav-mobile-trigger ${isMenuOpen ? 'is-open' : ''}`.trim()}
         type="button"
-        aria-label={onAboutClick ? 'Open about overlay' : isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-        aria-expanded={onAboutClick ? undefined : isMenuOpen}
-        aria-controls={onAboutClick ? undefined : 'portfolio-primary-nav'}
-        onClick={onAboutClick ? handleAboutClick : () => setIsMenuOpen((current) => !current)}
+        aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={isMenuOpen}
+        aria-controls="portfolio-primary-nav"
+        onClick={() => setIsMenuOpen((current) => !current)}
       >
-        <span className="nav-mobile-trigger-label">{onAboutClick ? 'About' : 'More'}</span>
+        <span className="nav-mobile-trigger-label">Menu</span>
         <span className="nav-mobile-trigger-icon" aria-hidden="true">
           <span />
           <span />
