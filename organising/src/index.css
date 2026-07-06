@@ -2403,14 +2403,21 @@ body {
 }
 
 .portfolio-pill-link {
+  min-height: 32px;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--text-inverse);
+  padding: 4px 14px;
+  font-weight: var(--font-weight-project-meta);
   text-decoration: none;
-  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .portfolio-pill-link:hover,
 .portfolio-pill-link:focus-visible {
-  border-color: rgb(23 21 20 / 0.42);
-  color: var(--text-strong);
+  border-color: var(--text-strong);
+  background: var(--text-strong);
+  color: var(--text-inverse);
   transform: translateY(-1px);
 }
 

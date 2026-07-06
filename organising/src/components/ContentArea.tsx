@@ -732,6 +732,10 @@ export default function ContentArea({
               </>
             )}
             chips={['0-1', 'U.S. Telehealth']}
+            productLink={{
+              label: 'View product',
+              href: 'https://openloophealth.com/launchpad',
+            }}
             meta={launchpadMetaItems}
             artifact={{
               type: 'video',
