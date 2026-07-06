@@ -92,7 +92,7 @@ const portfolioProjects: PortfolioProject[] = [
 
 export default function PortfolioWorkSection({
   title = 'Select Work',
-  description = 'Projects across startups, nonprofits, and enterprise.',
+  description = 'Projects across enterprise, nonprofits, and startups.',
   id = 'work',
 }: PortfolioWorkSectionProps) {
   return (
