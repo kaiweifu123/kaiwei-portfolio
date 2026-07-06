@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 type PortfolioNavProps = {
   isVisible?: boolean;
@@ -34,6 +34,12 @@ export default function PortfolioNav({
   className = '',
 }: PortfolioNavProps) {
   const visibilityClass = isVisible ? 'is-visible' : 'is-hidden';
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleAboutClick = () => {
+    setIsMenuOpen(false);
+    onAboutClick?.();
+  };
 
   return (
     <header className={`portfolio-nav ${visibilityClass} ${className}`.trim()} aria-label="Portfolio">
@@ -41,24 +47,35 @@ export default function PortfolioNav({
         <a href={homeHref} aria-label="Kaiwei Fu home">Kaiwei Fu</a>
         <span>AI Experience Designer</span>
       </div>
-      <nav>
+      <button
+        className={`nav-mobile-trigger ${isMenuOpen ? 'is-open' : ''}`.trim()}
+        type="button"
+        aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        aria-expanded={isMenuOpen}
+        aria-controls="portfolio-primary-nav"
+        onClick={() => setIsMenuOpen((current) => !current)}
+      >
+        <span />
+        <span />
+      </button>
+      <nav id="portfolio-primary-nav" className={isMenuOpen ? 'is-open' : ''}>
         <div className="nav-menu">
-          <a className="nav-menu-trigger" href={workHref} aria-haspopup="true">
+          <a className="nav-menu-trigger" href={workHref} aria-haspopup="true" onClick={() => setIsMenuOpen(false)}>
             Product design
           </a>
           <div className="nav-dropdown" role="menu" aria-label="Product design cases">
             {productDesignLinks.map((link) => (
-              <a href={link.href} role="menuitem" key={link.href}>
+              <a href={link.href} role="menuitem" key={link.href} onClick={() => setIsMenuOpen(false)}>
                 {link.label}
               </a>
             ))}
           </div>
         </div>
-        <a href={illustrationHref}>Illustration</a>
+        <a href={illustrationHref} onClick={() => setIsMenuOpen(false)}>Illustration</a>
         {onAboutClick ? (
-          <button type="button" onClick={onAboutClick}>About</button>
+          <button type="button" onClick={handleAboutClick}>About</button>
         ) : (
-          <a href={aboutHref}>About</a>
+          <a href={aboutHref} onClick={() => setIsMenuOpen(false)}>About</a>
         )}
       </nav>
     </header>
