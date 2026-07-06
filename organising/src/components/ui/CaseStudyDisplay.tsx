@@ -545,7 +545,7 @@ function LazyCaseVideo({
     <video
       ref={videoRef}
       src={src}
-      className={`${className ?? ''} media-fade ${mediaLoaded.className}`.trim()}
+      className={`${className ?? ''} ${controls ? '' : 'media-fade'} ${mediaLoaded.className}`.trim()}
       aria-label={ariaLabel}
       controls={controls}
       muted
