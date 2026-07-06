@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import Lightbox from './Lightbox';
+import { isVideoSource, useInViewVideo, useMediaLoadedClass } from './mediaLoading';
 
 interface FigureFrameProps {
   src: string;
@@ -28,24 +29,41 @@ export default function FigureFrame({
   variant = 'default',
 }: FigureFrameProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const videoRef = useInViewVideo<HTMLVideoElement>(isVideoSource(src));
+  const mediaLoaded = useMediaLoadedClass();
   const resolvedFrameClassName = variant === 'flush'
-    ? 'relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--surface-base)]'
-    : frameClassName;
+    ? 'media-skeleton relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--surface-base)]'
+    : `media-skeleton ${frameClassName}`;
 
-  const image = (
+  const media = isVideoSource(src) ? (
+    <video
+      ref={videoRef}
+      src={src}
+      aria-label={alt}
+      className={`${imageClassName} media-fade ${mediaLoaded.className}`.trim()}
+      muted
+      loop
+      playsInline
+      preload="none"
+      onLoadedData={mediaLoaded.onLoadedData}
+    />
+  ) : (
     <button className="zoomable-image-trigger" type="button" onClick={() => setIsLightboxOpen(true)} aria-label={`Open image preview: ${alt}`}>
       <img
         src={src}
         alt={alt}
         referrerPolicy={referrerPolicy}
-        className={imageClassName}
+        className={`${imageClassName} media-fade ${mediaLoaded.className}`.trim()}
+        loading="lazy"
+        decoding="async"
+        onLoad={mediaLoaded.onLoad}
       />
     </button>
   );
 
   return (
     <div className={wrapperClassName}>
-      {resolvedFrameClassName ? <div className={resolvedFrameClassName}>{image}</div> : image}
+      {resolvedFrameClassName ? <div className={resolvedFrameClassName}>{media}</div> : media}
       {caption}
       {isLightboxOpen ? <Lightbox src={src} alt={alt} onClose={() => setIsLightboxOpen(false)} /> : null}
     </div>

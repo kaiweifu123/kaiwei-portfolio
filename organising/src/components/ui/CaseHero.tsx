@@ -6,6 +6,7 @@
 import React from 'react';
 import MetaGrid, { type MetaGridItem } from './MetaGrid';
 import Pill from './Pill';
+import { useMediaLoadedClass } from './mediaLoading';
 
 type CaseHeroArtifact =
   | {
@@ -104,6 +105,8 @@ function HeroCopy({
 }
 
 function EditorialArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
+  const mediaLoaded = useMediaLoadedClass();
+
   if (artifact.type !== 'image') {
     return null;
   }
@@ -121,11 +124,14 @@ function EditorialArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
 
   return (
     <div className={heroArtifactPanelClassName} style={artifact.background ? { backgroundColor: artifact.background } : undefined}>
-      <figure className={heroFigureClassName}>
+      <figure className={`${heroFigureClassName} media-skeleton`}>
         <img
           src={artifact.src}
           alt={artifact.alt}
-          className={heroImageClassName}
+          className={`${heroImageClassName} media-fade ${mediaLoaded.className}`.trim()}
+          loading="eager"
+          decoding="async"
+          onLoad={mediaLoaded.onLoad}
           style={artifact.objectPosition ? { objectPosition: artifact.objectPosition } : undefined}
         />
       </figure>
@@ -135,10 +141,11 @@ function EditorialArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
 
 function ShowcaseArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
   const background = artifact.background ? { backgroundColor: artifact.background } : undefined;
+  const mediaLoaded = useMediaLoadedClass();
 
   return (
     <div className="case-hero-showcase-artifact-panel" style={background}>
-      <div className="case-hero-showcase-artifact">
+      <div className="case-hero-showcase-artifact media-skeleton">
         {artifact.type === 'image' ? (
           <button
             className="zoomable-image-trigger"
@@ -146,11 +153,18 @@ function ShowcaseArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
             onClick={artifact.onClick}
             aria-label={`Open image preview: ${artifact.alt}`}
           >
-            <img src={artifact.src} alt={artifact.alt} />
+            <img
+              src={artifact.src}
+              alt={artifact.alt}
+              className={`media-fade ${mediaLoaded.className}`.trim()}
+              loading="eager"
+              decoding="async"
+              onLoad={mediaLoaded.onLoad}
+            />
           </button>
         ) : (
           <video
-            className={artifact.className ?? 'case-hero-showcase-video'}
+            className={`${artifact.className ?? 'case-hero-showcase-video'} media-fade ${mediaLoaded.className}`.trim()}
             src={artifact.src}
             autoPlay={artifact.autoPlay}
             muted={artifact.muted}
@@ -159,6 +173,7 @@ function ShowcaseArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
             preload={artifact.preload}
             poster={artifact.poster}
             aria-label={artifact.ariaLabel}
+            onLoadedData={mediaLoaded.onLoadedData}
           />
         )}
       </div>

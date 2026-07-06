@@ -40,7 +40,7 @@ import managerInformationArchitectureImg from '../assets/images/patient-crm/fram
 import managerWorkflowStructureImg from '../assets/images/patient-crm/framer/manager-workflow-structure.svg';
 import allocationParadoxImg from '../assets/images/patient-crm/framer/allocation-paradox.png';
 import aiCrmPrototypeVideo from '../assets/videos/patient-crm/ai-crm-prototype.mov';
-import heroCrmCardGif from '../assets/videos/patient-crm/crm-card-v4.gif';
+import heroCrmCardVideo from '../assets/videos/patient-crm/crm-card-v4.mp4';
 import finalDesignVideo from '../assets/videos/patient-crm/crm-agent-final-design-cropped.mp4';
 import dashboardConceptOneVideo from '../assets/videos/patient-crm/crm-dashboard-ai-generated-1.mp4';
 import dashboardConceptTwoVideo from '../assets/videos/patient-crm/crm-dashboard-ai-generated-2.mp4';
@@ -396,7 +396,6 @@ export default function PatientCrmCaseStudy() {
     []
   );
   const [selectedSectionId, setSelectedSectionId] = useState(navItems[0]?.id ?? '');
-  const [heroLightboxOpen, setHeroLightboxOpen] = useState(false);
   const { previous, next } = getAdjacentPagerItems(caseStudyPagerItems, 'patient-crm');
 
   useEffect(() => {
@@ -457,16 +456,16 @@ export default function PatientCrmCaseStudy() {
         chips={['2026', 'Product design', 'Healthcare operations']}
         meta={projectMetaItems}
         artifact={{
-          type: 'image',
-          src: heroCrmCardGif,
-          alt: 'Patient CRM final design preview',
-          onClick: () => setHeroLightboxOpen(true),
+          type: 'video',
+          src: heroCrmCardVideo,
+          ariaLabel: 'Patient CRM final design preview',
+          autoPlay: true,
+          muted: true,
+          loop: true,
+          playsInline: true,
+          preload: 'metadata',
         }}
       />
-
-      {heroLightboxOpen ? (
-        <Lightbox src={heroCrmCardGif} alt="Patient CRM final design preview" onClose={() => setHeroLightboxOpen(false)} />
-      ) : null}
 
       {sections.map((section, index) => (
         <SectionShell

@@ -1518,7 +1518,7 @@ export const portfolioCases = [
                 "title": "Menu Translator",
                 "feature": {
                   "media": {
-                    "src": "/case-assets/ohisama/assets/14-translator.gif",
+                    "src": "/case-assets/ohisama/assets/14-translator.mp4",
                     "alt": "Menu translator prototype"
                   },
                   "title": "Menu Translator",
@@ -1536,7 +1536,7 @@ export const portfolioCases = [
                 "title": "Dish details",
                 "feature": {
                   "media": {
-                    "src": "/case-assets/ohisama/assets/16-dish-details.gif",
+                    "src": "/case-assets/ohisama/assets/16-dish-details.mp4",
                     "alt": "Dish details prototype"
                   },
                   "title": "Dish details",
@@ -1554,7 +1554,7 @@ export const portfolioCases = [
                 "title": "Collect",
                 "feature": {
                   "media": {
-                    "src": "/case-assets/ohisama/assets/18-collect.gif",
+                    "src": "/case-assets/ohisama/assets/18-collect.mp4",
                     "alt": "Collect feature prototype"
                   },
                   "title": "Collect",
@@ -1869,7 +1869,7 @@ export const portfolioCases = [
             "figures": [
               {
                 "type": "figure",
-                "src": "/case-assets/tfl-go/assets/K2119405583713432307157556216094-share.gif",
+                "src": "/case-assets/tfl-go/assets/K2119405583713432307157556216094-share.mp4",
                 "alt": "Share and save planned trip prototype"
               },
               {
@@ -1879,7 +1879,7 @@ export const portfolioCases = [
               },
               {
                 "type": "figure",
-                "src": "/case-assets/tfl-go/assets/K2119402505154760589844196573470-language.gif",
+                "src": "/case-assets/tfl-go/assets/K2119402505154760589844196573470-language.mp4",
                 "alt": "Language support prototype"
               },
               {
@@ -1889,7 +1889,7 @@ export const portfolioCases = [
               },
               {
                 "type": "figure",
-                "src": "/case-assets/tfl-go/assets/V2119402334208783258777781747998-step-bystep.gif",
+                "src": "/case-assets/tfl-go/assets/V2119402334208783258777781747998-step-bystep.mp4",
                 "alt": "Step by step guidance prototype"
               },
               {
@@ -1899,7 +1899,7 @@ export const portfolioCases = [
               },
               {
                 "type": "figure",
-                "src": "/case-assets/tfl-go/assets/A2119403032473386680905439068446-offline.gif",
+                "src": "/case-assets/tfl-go/assets/A2119403032473386680905439068446-offline.mp4",
                 "alt": "Offline mode prototype"
               },
               {

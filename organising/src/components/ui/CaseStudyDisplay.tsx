@@ -22,6 +22,7 @@ import Card from './Card';
 import Callout from './Callout';
 import CaseSegmentTabs from './CaseSegmentTabs';
 import Lightbox from './Lightbox';
+import { useInViewVideo, useMediaLoadedClass } from './mediaLoading';
 
 export interface CaseStudyCardItem {
   label: string;
@@ -285,14 +286,7 @@ export function DesignProcessTabs({
     media ? (
       <figure className="case-design-process-figure">
         {media.type === 'video' ? (
-          <video
-            src={media.src}
-            aria-label={media.alt}
-            controls
-            muted
-            loop
-            playsInline
-          />
+          <LazyCaseVideo src={media.src} ariaLabel={media.alt} controls />
         ) : (
           <button
             className="zoomable-image-trigger"
@@ -467,14 +461,7 @@ export function ConceptDirectionToggle({ items }: { items: CaseStudyCardItem[] }
         <span className="case-caption-label block">{selected.body}</span>
         <h3 className="case-card-title">{selected.title}</h3>
         {selected.videoSrc ? (
-          <video
-            src={selected.videoSrc}
-            className="case-concept-preview-video"
-            controls
-            muted
-            loop
-            playsInline
-          />
+          <LazyCaseVideo src={selected.videoSrc} className="case-concept-preview-video" controls />
         ) : (
           <div className="case-concept-preview">
             {selectedIndex === 0 ? (
@@ -534,15 +521,38 @@ export function VideoShowcase({
         </div>
       ) : null}
       <div className="case-showcase-media">
-        <video
-          src={src}
-          className="case-showcase-video"
-          controls
-          muted
-          loop
-          playsInline
-        />
+        <LazyCaseVideo src={src} className="case-showcase-video" controls />
       </div>
     </div>
+  );
+}
+
+function LazyCaseVideo({
+  src,
+  className,
+  ariaLabel,
+  controls = false,
+}: {
+  src: string;
+  className?: string;
+  ariaLabel?: string;
+  controls?: boolean;
+}) {
+  const videoRef = useInViewVideo<HTMLVideoElement>(!controls);
+  const mediaLoaded = useMediaLoadedClass();
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      className={`${className ?? ''} media-fade ${mediaLoaded.className}`.trim()}
+      aria-label={ariaLabel}
+      controls={controls}
+      muted
+      loop
+      playsInline
+      preload="none"
+      onLoadedData={mediaLoaded.onLoadedData}
+    />
   );
 }

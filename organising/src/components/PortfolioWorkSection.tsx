@@ -4,6 +4,7 @@
  */
 
 import Pill from './ui/Pill';
+import { prefetchInternalHref, useInViewVideo, useMediaLoadedClass } from './ui/mediaLoading';
 
 type PortfolioProject = {
   title: string;
@@ -56,7 +57,8 @@ const portfolioProjects: PortfolioProject[] = [
   },
   {
     title: 'Hireable AI CV Builder',
-    image: '/case-assets/hireable-cover.gif',
+    image: '/case-assets/hireable-cover.jpg',
+    video: '/case-assets/hireable-cover.mp4',
     description: 'Won £120k+ investment with a prototype of a resume builder.',
     highlights: ['£120k+'],
     tags: ['Product Design', 'SaaS', 'AI'],
@@ -104,21 +106,15 @@ export default function PortfolioWorkSection({
 
       <main className="work-content">
         {portfolioProjects.map((project) => (
-          <a className="selected-work-card" href={project.href} key={project.title}>
+          <a
+            className="selected-work-card"
+            href={project.href}
+            key={project.title}
+            onMouseEnter={() => prefetchInternalHref(project.href)}
+            onTouchStart={() => prefetchInternalHref(project.href)}
+          >
             <figure className={`project-media project-media-${project.title.toLowerCase().replaceAll(' ', '-')}`}>
-              {project.video ? (
-                <video
-                  src={project.video}
-                  poster={project.image}
-                  aria-label={`${project.title} case study preview`}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
-              ) : (
-                <img src={project.image} alt={`${project.title} case study preview`} />
-              )}
+              <WorkCardMedia project={project} />
             </figure>
             <h3>{project.title}</h3>
             <p className="project-description">
@@ -135,5 +131,38 @@ export default function PortfolioWorkSection({
         ))}
       </main>
     </section>
+  );
+}
+
+function WorkCardMedia({ project }: { project: PortfolioProject }) {
+  const videoRef = useInViewVideo<HTMLVideoElement>(Boolean(project.video));
+  const mediaLoaded = useMediaLoadedClass();
+
+  if (project.video) {
+    return (
+      <video
+        ref={videoRef}
+        src={project.video}
+        poster={project.image}
+        aria-label={`${project.title} case study preview`}
+        muted
+        loop
+        playsInline
+        preload="none"
+        className={`media-fade ${mediaLoaded.className}`.trim()}
+        onLoadedData={mediaLoaded.onLoadedData}
+      />
+    );
+  }
+
+  return (
+    <img
+      src={project.image}
+      alt={`${project.title} case study preview`}
+      loading="lazy"
+      decoding="async"
+      className={`media-fade ${mediaLoaded.className}`.trim()}
+      onLoad={mediaLoaded.onLoad}
+    />
   );
 }

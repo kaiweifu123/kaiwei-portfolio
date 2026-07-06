@@ -2985,3 +2985,58 @@ body {
     transform: translate(-50%, 6px) scale(1);
   }
 }
+
+.media-skeleton {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      100deg,
+      var(--surface-10) 0%,
+      var(--surface-20) 42%,
+      var(--surface-10) 78%
+    );
+  background-size: 220% 100%;
+  animation: media-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.media-skeleton:has(.is-loaded) {
+  animation: none;
+  background: var(--surface-base);
+}
+
+.media-fade {
+  opacity: 0;
+  transition: opacity 220ms ease-out;
+}
+
+.media-fade.is-loaded {
+  opacity: 1;
+}
+
+.media-skeleton > .zoomable-image-trigger,
+.media-skeleton > img,
+.media-skeleton > video {
+  display: block;
+  width: 100%;
+}
+
+@keyframes media-skeleton-shimmer {
+  0% {
+    background-position: 180% 0;
+  }
+
+  100% {
+    background-position: -80% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-skeleton {
+    animation: none;
+  }
+
+  .media-fade {
+    transition: none;
+  }
+}

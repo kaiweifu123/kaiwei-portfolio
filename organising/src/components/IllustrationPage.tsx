@@ -8,6 +8,7 @@ import PortfolioNav from './ui/PortfolioNav';
 import InfoOverlay from './ui/InfoOverlay';
 import Lightbox from './ui/Lightbox';
 import ProjectPager from './ui/ProjectPager';
+import { prefetchInternalHref, useMediaLoadedClass } from './ui/mediaLoading';
 
 type CargoMedia = {
   hash: string;
@@ -196,14 +197,18 @@ export default function IllustrationPage() {
         </aside>
         <main className="work-content illustration-index">
           {illustrationProjects.map((project, index) => (
-            <a className="illustration-index-card" href={`/illustration/${project.slug}`} key={project.slug}>
-              <figure>
-                <img
-                  src={cargoAssetUrl(project.cover, project.cover.mime === 'image/gif' ? 760 : 1400)}
-                  alt={`${project.title} preview`}
-                  loading="lazy"
-                />
-              </figure>
+            <a
+              className="illustration-index-card"
+              href={`/illustration/${project.slug}`}
+              key={project.slug}
+              onMouseEnter={() => prefetchInternalHref(`/illustration/${project.slug}`)}
+              onTouchStart={() => prefetchInternalHref(`/illustration/${project.slug}`)}
+            >
+              <IllustrationImage
+                src={cargoAssetUrl(project.cover, project.cover.mime === 'image/gif' ? 760 : 1400)}
+                alt={`${project.title} preview`}
+                loading="lazy"
+              />
               <div className="illustration-card-meta" aria-label={`${project.title} details`}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <span>{project.theme}</span>
@@ -258,7 +263,7 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
       </section>
 
       {featuredMedia ? (
-        <figure className="illustration-feature-media">
+        <figure className="illustration-feature-media media-skeleton">
           <button
             className="zoomable-image-trigger"
             type="button"
@@ -272,6 +277,7 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
               src={cargoAssetUrl(featuredMedia, 1800)}
               alt={`${project.title} featured artwork`}
               loading="eager"
+              decoding="async"
             />
           </button>
         </figure>
@@ -279,7 +285,7 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
 
       <section className="illustration-project-gallery illustration-detail-gallery" aria-label={`${project.title} artworks`}>
         {galleryMedia.map((media, index) => (
-          <figure className="illustration-project-media" key={`${project.slug}-${media.hash}-${index}`}>
+          <figure className="illustration-project-media media-skeleton" key={`${project.slug}-${media.hash}-${index}`}>
             <button
               className="zoomable-image-trigger"
               type="button"
@@ -293,6 +299,7 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
                 src={cargoAssetUrl(media, media.mime === 'image/gif' ? 760 : 1400)}
                 alt={`${project.title} artwork ${index + 1}`}
                 loading={index < 2 ? 'eager' : 'lazy'}
+                decoding="async"
               />
             </button>
           </figure>
@@ -309,5 +316,30 @@ export function IllustrationProjectPage({ project }: { project: IllustrationProj
         next={{ title: nextProject.title, href: `/illustration/${nextProject.slug}` }}
       />
     </main>
+  );
+}
+
+function IllustrationImage({
+  src,
+  alt,
+  loading,
+}: {
+  src: string;
+  alt: string;
+  loading: 'eager' | 'lazy';
+}) {
+  const mediaLoaded = useMediaLoadedClass();
+
+  return (
+    <figure className="media-skeleton">
+      <img
+        src={src}
+        alt={alt}
+        loading={loading}
+        decoding="async"
+        className={`media-fade ${mediaLoaded.className}`.trim()}
+        onLoad={mediaLoaded.onLoad}
+      />
+    </figure>
   );
 }
