@@ -867,6 +867,10 @@ export const portfolioCases = [
       "Donation flow",
       "UK theatre"
     ],
+    "productLink": {
+      "label": "View product",
+      "href": "https://www.readingrep.com/"
+    },
     "hero": {
       "src": "/case-assets/reading-rep/assets/figma/extracted/donation-gift-module-crop.jpg",
       "alt": "Reading Rep donation page gift amount module",
