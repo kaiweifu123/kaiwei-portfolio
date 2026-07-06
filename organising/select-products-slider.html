@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Launchpad Onboarding UI Changes</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #f4f0ea;
+        color: #3a3330;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .comparison-shell {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 32px auto;
+        background: #fbf9f5;
+        padding: 32px 40px 40px;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 26px;
+      }
+      .tab {
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: #9a8878;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        font: inherit;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .tab.is-active {
+        background: #fff;
+        color: #2f2926;
+        box-shadow: 0 4px 14px rgba(58, 51, 48, 0.08);
+      }
+      .tab-num {
+        color: #b0a898;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 10px;
+      }
+      .tab.is-active .tab-num { color: #4a7260; }
+      .panel { display: none; }
+      .panel.is-active { display: block; }
+      .intro {
+        width: 92%;
+        margin: 0 auto;
+      }
+      .eyebrow,
+      .changes-label {
+        color: #9a8878;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      h3 {
+        margin: 8px 0 0;
+        color: #3a3330;
+        font-size: 28px;
+        font-weight: 560;
+        line-height: 1.18;
+        letter-spacing: 0;
+      }
+      .desc {
+        max-width: 720px;
+        margin: 10px 0 0;
+        color: #9a8878;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      .slider {
+        position: relative;
+        width: 92%;
+        margin: 32px auto 0;
+        overflow: hidden;
+        border: 1px solid #ddd6ce;
+        border-radius: 12px;
+        background: #eee;
+        user-select: none;
+        touch-action: none;
+      }
+      .slider img {
+        display: block;
+        width: 100%;
+        pointer-events: none;
+      }
+      .before-wrap {
+        position: absolute;
+        inset: 0 auto 0 0;
+        overflow: hidden;
+        width: 42%;
+      }
+      .before-wrap img {
+        height: 100%;
+        max-width: none;
+        object-fit: cover;
+        object-position: left top;
+        width: 238.095%;
+      }
+      .before-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.05);
+      }
+      .handle {
+        position: absolute;
+        inset: 0 auto 0 42%;
+        z-index: 8;
+        width: 2px;
+        background: #fff;
+        cursor: ew-resize;
+      }
+      .handle::after {
+        content: "⇔";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border-radius: 999px;
+        background: #fff;
+        color: #555;
+        font-size: 13px;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      }
+      .badge {
+        pointer-events: none;
+        position: absolute;
+        top: 12px;
+        z-index: 6;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .badge.before {
+        left: 12px;
+        background: #f2ede8;
+        color: #9a8878;
+      }
+      .badge.after {
+        right: 12px;
+        background: #dfe9e2;
+        color: #4a7260;
+      }
+      .hint {
+        margin: 10px 0 0;
+        color: #b0a898;
+        font-size: 11px;
+        text-align: center;
+      }
+      .changes {
+        width: 92%;
+        margin: 34px auto 0;
+      }
+      .change-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-top: 12px;
+        border-top: 1px solid #e8e0d8;
+      }
+      .change-row {
+        min-width: 0;
+        border-right: 1px solid #e8e0d8;
+        padding: 24px 24px 4px 0;
+      }
+      .change-row + .change-row { padding-left: 24px; }
+      .change-row:last-child { border-right: 0; }
+      .change-num {
+        margin: 0;
+        color: #c8bfb5;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+      .change-title {
+        margin: 6px 0 0;
+        color: #3a3330;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .change-desc {
+        margin: 6px 0 0;
+        color: #9a8878;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .mini {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .mc {
+        min-height: 90px;
+        border: 1px solid #e6ded6;
+        border-radius: 8px;
+        background: #fff;
+        padding: 10px;
+      }
+      .mini-label {
+        margin-bottom: 8px;
+        color: #b0a898;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 8px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .gray {
+        border-radius: 5px;
+        background: #d8d1c9;
+      }
+      .gray.dark { background: #9f948a; }
+      .gray.green { background: #9eb7a6; }
+      .bar {
+        height: 8px;
+        margin-bottom: 6px;
+      }
+      .lm-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 7px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        flex: 0 0 auto;
+      }
+      .pill {
+        height: 14px;
+        border-radius: 999px;
+      }
+      .mini-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+      .mini-card {
+        min-height: 38px;
+        border-radius: 7px;
+        background: #ebe6df;
+        padding: 6px;
+      }
+      @media (max-width: 760px) {
+        .comparison-shell { width: 100%; margin: 0; padding: 24px 16px 32px; }
+        .intro, .slider, .changes { width: 100%; }
+        h3 { font-size: 23px; }
+        .change-list { grid-template-columns: 1fr; }
+        .change-row,
+        .change-row + .change-row {
+          border-right: 0;
+          border-bottom: 1px solid #e8e0d8;
+          padding: 22px 0;
+        }
+        .change-row:last-child { border-bottom: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="comparison-shell">
+      <nav class="tabs" aria-label="Onboarding UI changes">
+        <button class="tab is-active" type="button" data-tab="tab-1"><span class="tab-num">01</span><span>Select Products</span></button>
+        <button class="tab" type="button" data-tab="tab-2"><span class="tab-num">02</span><span>Build Brand</span></button>
+        <button class="tab" type="button" data-tab="tab-3"><span class="tab-num">03</span><span>Choose Color</span></button>
+        <button class="tab" type="button" data-tab="tab-4"><span class="tab-num">04</span><span>Choose Logo</span></button>
+        <button class="tab" type="button" data-tab="tab-5"><span class="tab-num">05</span><span>Design Site</span></button>
+      </nav>
+
+      <section class="panel is-active" id="tab-1">
+        <div class="intro">
+          <p class="eyebrow">Select Products - Step 03</p>
+          <h3>Rethinking how products are presented</h3>
+          <p class="desc">The original flow buried products inside a chat-driven experience with no visual context. I redesigned it around three principles: show the AI's reasoning, organise by category, and let users scan visually.</p>
+        </div>
+        <div class="slider" data-slider>
+          <img src="src/assets/images/launchpad-v2/compare/onboarding-product.png" alt="Select products after redesign" draggable="false" />
+          <div class="before-wrap">
+            <img src="src/assets/images/launchpad-v2/compare/add-products-product-table.jpg" alt="Select products before redesign" draggable="false" />
+          </div>
+          <div class="handle"></div>
+          <span class="badge before">BEFORE</span>
+          <span class="badge after">AFTER</span>
+        </div>
+        <p class="hint">← drag to compare →</p>
+        <div class="changes">
+          <p class="changes-label">UI Changes</p>
+          <div class="change-list">
+            <article class="change-row">
+              <p class="change-num">CHANGE 01</p>
+              <p class="change-title">Chat → AI recommendation summary</p>
+              <p class="change-desc">I removed the always-on chat panel and turned AI into a concise recommendation summary above the product choices.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar dark" style="width:72%"></div><div class="gray bar" style="width:88%"></div><div class="gray bar" style="width:64%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray green bar" style="width:94%"></div><div class="gray bar" style="width:62%"></div><div class="gray bar" style="width:48%"></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 02</p>
+              <p class="change-title">Table → visual product cards</p>
+              <p class="change-desc">I moved from dense rows to image-led cards so users could recognise product types before reading details.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="lm-row"><span class="gray dot"></span><span class="gray bar" style="width:70%"></span></div><div class="lm-row"><span class="gray dot"></span><span class="gray bar" style="width:62%"></span></div><div class="lm-row"><span class="gray dot"></span><span class="gray bar" style="width:76%"></span></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="mini-grid-3"><div class="mini-card"><div class="gray bar"></div><div class="gray bar" style="width:58%"></div></div><div class="mini-card"><div class="gray bar"></div><div class="gray bar" style="width:68%"></div></div><div class="mini-card"><div class="gray bar"></div><div class="gray bar" style="width:52%"></div></div></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 03</p>
+              <p class="change-title">Added category tabs</p>
+              <p class="change-desc">I grouped products by treatment direction so browsing became a focused choice instead of one long list.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar" style="width:86%"></div><div class="gray bar" style="width:82%"></div><div class="gray bar" style="width:78%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="lm-row"><span class="gray green pill" style="width:36%"></span><span class="gray pill" style="width:28%"></span></div><div class="mini-grid-3"><div class="mini-card"></div><div class="mini-card"></div><div class="mini-card"></div></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="tab-2">
+        <div class="intro">
+          <p class="eyebrow">Build Brand - Step 04</p>
+          <h3>Making brand generation iterative</h3>
+          <p class="desc">The first version gave users one generated result. If it missed the mark, the only path was to start over. I redesigned the step so users could keep momentum and refine the brand in place.</p>
+        </div>
+        <div class="slider" data-slider>
+          <img src="src/assets/images/launchpad-v2/compare/step04-build-brand-after.jpg" alt="Build brand after redesign" draggable="false" />
+          <div class="before-wrap">
+            <img src="src/assets/images/launchpad-v2/compare/step04-build-brand-before.jpg" alt="Build brand before redesign" draggable="false" />
+          </div>
+          <div class="handle"></div>
+          <span class="badge before">BEFORE</span>
+          <span class="badge after">AFTER</span>
+        </div>
+        <p class="hint">← drag to compare →</p>
+        <div class="changes">
+          <p class="changes-label">UI Changes</p>
+          <div class="change-list">
+            <article class="change-row">
+              <p class="change-num">CHANGE 01</p>
+              <p class="change-title">Generate More</p>
+              <p class="change-desc">I surfaced more naming options inline so users could compare directions without re-filling the form.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar dark" style="width:82%"></div><div class="gray bar" style="width:58%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="lm-row"><span class="gray green dot"></span><span class="gray bar" style="width:72%"></span></div><div class="lm-row"><span class="gray dot"></span><span class="gray bar" style="width:66%"></span></div><div class="lm-row"><span class="gray dot"></span><span class="gray bar" style="width:76%"></span></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 02</p>
+              <p class="change-title">Refine with AI</p>
+              <p class="change-desc">I added a natural-language prompt so users could tweak the result directly instead of regenerating from scratch.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar" style="width:84%"></div><div class="gray bar" style="width:42%"></div><div class="gray pill" style="width:34%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray bar" style="width:76%"></div><div class="gray green pill" style="width:92%"></div><div class="gray bar" style="width:38%"></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 03</p>
+              <p class="change-title">Iteration stays in context</p>
+              <p class="change-desc">The design keeps the previous result visible, so refinement feels like editing a direction instead of restarting a task.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar" style="width:78%"></div><div class="gray bar" style="width:68%"></div><div class="gray bar" style="width:52%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray bar dark" style="width:78%"></div><div class="gray green bar" style="width:68%"></div><div class="gray pill" style="width:45%"></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="tab-3">
+        <div class="intro">
+          <p class="eyebrow">Choose Style: Color - Step 05</p>
+          <h3>Letting users see color decisions before committing</h3>
+          <p class="desc">Users were choosing colors blindly. The most memorable failure was selecting gold and getting something that felt yellow. I changed the step so every color choice had immediate storefront context.</p>
+        </div>
+        <div class="slider" data-slider>
+          <img src="src/assets/images/launchpad-v2/compare/step05-color-after.jpg" alt="Color style after redesign" draggable="false" />
+          <div class="before-wrap">
+            <img src="src/assets/images/launchpad-v2/compare/step05-color-before.jpg" alt="Color style before redesign" draggable="false" />
+          </div>
+          <div class="handle"></div>
+          <span class="badge before">BEFORE</span>
+          <span class="badge after">AFTER</span>
+        </div>
+        <p class="hint">← drag to compare →</p>
+        <div class="changes">
+          <p class="changes-label">UI Changes</p>
+          <div class="change-list">
+            <article class="change-row">
+              <p class="change-num">CHANGE 01</p>
+              <p class="change-title">Live storefront preview</p>
+              <p class="change-desc">I made the left preview update in real time, so color became a visible brand decision instead of an abstract swatch.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="lm-row"><span class="gray dot"></span><span class="gray dot"></span><span class="gray dot"></span></div><div class="gray bar" style="width:70%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray green bar" style="height:34px;width:100%"></div><div class="lm-row"><span class="gray green dot"></span><span class="gray dot"></span><span class="gray dot"></span></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 02</p>
+              <p class="change-title">Color has consequence</p>
+              <p class="change-desc">I tied each selection to a page surface so users could judge tone, contrast, and brand feel immediately.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="mini-grid-3"><span class="gray dot"></span><span class="gray dot"></span><span class="gray dot"></span></div><div class="gray bar" style="width:54%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray green bar" style="height:18px"></div><div class="gray bar" style="width:82%"></div><div class="gray bar" style="width:46%"></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 03</p>
+              <p class="change-title">Reduced blind confirmation</p>
+              <p class="change-desc">The user no longer has to approve a palette first and discover the visual mismatch later.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar dark" style="width:66%"></div><div class="gray pill" style="width:42%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray green bar" style="width:72%"></div><div class="gray bar" style="width:62%"></div><div class="gray green pill" style="width:36%"></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="tab-4">
+        <div class="intro">
+          <p class="eyebrow">Choose Style: Logo - Step 05</p>
+          <h3>Turning logo creation into a directed choice</h3>
+          <p class="desc">The first version treated logo work as a single upload area. Users could not explore directions or adjust the output. I split the paths and added previews so the logo could be evaluated as a system.</p>
+        </div>
+        <div class="slider" data-slider>
+          <img src="src/assets/images/launchpad-v2/compare/step05-logo-after.jpg" alt="Logo after redesign" draggable="false" />
+          <div class="before-wrap">
+            <img src="src/assets/images/launchpad-v2/compare/step05-logo-before.jpg" alt="Logo before redesign" draggable="false" />
+          </div>
+          <div class="handle"></div>
+          <span class="badge before">BEFORE</span>
+          <span class="badge after">AFTER</span>
+        </div>
+        <p class="hint">← drag to compare →</p>
+        <div class="changes">
+          <p class="changes-label">UI Changes</p>
+          <div class="change-list">
+            <article class="change-row">
+              <p class="change-num">CHANGE 01</p>
+              <p class="change-title">Generate vs Upload split</p>
+              <p class="change-desc">I separated the two paths so users could choose whether they wanted AI exploration or to bring an existing asset.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar" style="height:44px;width:100%"></div><div class="gray bar" style="width:58%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="mini-grid-3" style="grid-template-columns:1fr 1fr"><div class="mini-card"><div class="gray green bar"></div></div><div class="mini-card"><div class="gray bar"></div></div></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 02</p>
+              <p class="change-title">Three logo format previews</p>
+              <p class="change-desc">I showed multiple logo formats at once so users could judge whether a mark would work beyond a single square preview.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar dark" style="height:48px;width:48px;margin:auto"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="mini-grid-3"><div class="mini-card"><div class="gray green bar" style="height:20px"></div></div><div class="mini-card"><div class="gray green dot"></div></div><div class="mini-card"><div class="gray green bar" style="width:70%"></div></div></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 03</p>
+              <p class="change-title">Natural-language refinement</p>
+              <p class="change-desc">I added prompt-based refinement so users could change style or direction without losing the current generation.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar" style="width:80%"></div><div class="gray pill" style="width:36%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray green pill" style="width:94%"></div><div class="gray bar" style="width:48%"></div><div class="gray bar" style="width:62%"></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="tab-5">
+        <div class="intro">
+          <p class="eyebrow">Design Site - Step 06</p>
+          <h3>Making the final site adjustable before launch</h3>
+          <p class="desc">Images and logos used to feel final too early. I redesigned the step so users could refine generated assets and explicitly confirm where the finished logo would be used.</p>
+        </div>
+        <div class="slider" data-slider>
+          <img src="src/assets/images/launchpad-v2/compare/step06-design-site-after.jpg" alt="Design site after redesign" draggable="false" />
+          <div class="before-wrap">
+            <img src="src/assets/images/launchpad-v2/compare/step06-design-site-before.jpg" alt="Design site before redesign" draggable="false" />
+          </div>
+          <div class="handle"></div>
+          <span class="badge before">BEFORE</span>
+          <span class="badge after">AFTER</span>
+        </div>
+        <p class="hint">← drag to compare →</p>
+        <div class="changes">
+          <p class="changes-label">UI Changes</p>
+          <div class="change-list">
+            <article class="change-row">
+              <p class="change-num">CHANGE 01</p>
+              <p class="change-title">AI image refinement</p>
+              <p class="change-desc">I added a natural-language refinement prompt so users could adjust generated imagery without leaving the page.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar dark" style="height:44px"></div><div class="gray bar" style="width:54%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="gray bar dark" style="height:34px"></div><div class="gray green pill" style="width:92%"></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 02</p>
+              <p class="change-title">Logo finalisation state</p>
+              <p class="change-desc">I made logo approval explicit, with confirmation and usage context before the user treats it as final.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar" style="width:62%"></div><div class="gray bar" style="width:46%"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="lm-row"><span class="gray green dot"></span><span class="gray bar" style="width:68%"></span></div><div class="gray green pill" style="width:54%"></div></div>
+              </div>
+            </article>
+            <article class="change-row">
+              <p class="change-num">CHANGE 03</p>
+              <p class="change-title">Usage context made visible</p>
+              <p class="change-desc">I showed web, print, and dynamic usage contexts so the logo felt like a reusable asset, not just a page decoration.</p>
+              <div class="mini">
+                <div class="mc"><div class="mini-label">BEFORE</div><div class="gray bar dark" style="height:36px;width:70%;margin:auto"></div></div>
+                <div class="mc"><div class="mini-label">AFTER</div><div class="mini-grid-3"><div class="mini-card"><div class="gray green bar"></div></div><div class="mini-card"><div class="gray bar dark"></div></div><div class="mini-card"><div class="gray bar"></div></div></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach((item) => item.classList.remove("is-active"));
+          document.querySelectorAll(".panel").forEach((panel) => panel.classList.remove("is-active"));
+          tab.classList.add("is-active");
+          document.getElementById(tab.dataset.tab).classList.add("is-active");
+        });
+      });
+
+      document.querySelectorAll("[data-slider]").forEach((slider) => {
+        const beforeWrap = slider.querySelector(".before-wrap");
+        const beforeImg = beforeWrap.querySelector("img");
+        const handle = slider.querySelector(".handle");
+
+        const update = (clientX) => {
+          const rect = slider.getBoundingClientRect();
+          const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+          const pct = (x / rect.width) * 100;
+          beforeWrap.style.width = `${pct}%`;
+          beforeImg.style.width = pct === 0 ? "100%" : `${10000 / pct}%`;
+          handle.style.left = `${pct}%`;
+        };
+
+        slider.addEventListener("pointerdown", (event) => {
+          slider.setPointerCapture(event.pointerId);
+          update(event.clientX);
+        });
+
+        slider.addEventListener("pointermove", (event) => {
+          if (event.buttons !== 1) return;
+          update(event.clientX);
+        });
+      });
+    </script>
+  </body>
+</html>

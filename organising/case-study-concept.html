@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaunchPad — Kai Wei</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #c0392b;
+    --ink: #111;
+    --ink-2: #444;
+    --ink-3: #888;
+    --ink-4: #ccc;
+    --line: #e5e5e5;
+    --bg: #fff;
+    --bg-2: #f7f7f7;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --max: 820px;
+    --col-label: 112px;
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+  body { font-family: var(--sans); color: var(--ink); background: var(--bg); }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 50px;
+  }
+  .nav-brand { font-size: 13px; font-weight: 500; color: var(--ink); text-decoration: none; }
+  .nav-links { display: flex; gap: 22px; list-style: none; }
+  .nav-links a { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+
+  /* LAYOUT */
+  .page { max-width: var(--max); margin: 0 auto; padding: 0 24px 120px; }
+
+  /* HERO */
+  .hero { padding: 72px 0 64px; border-bottom: 1px solid var(--line); }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+  .hero-title { font-family: var(--serif); font-size: clamp(34px, 5vw, 50px); font-weight: 400; line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 22px; }
+  .hero-sub { font-size: 16px; line-height: 1.75; color: var(--ink-2); max-width: 540px; margin-bottom: 40px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-bottom: 40px; }
+  .meta-item { padding: 14px 18px; border-right: 1px solid var(--line); }
+  .meta-item:last-child { border-right: none; }
+  .meta-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  .meta-value { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .hero-img { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+  .hero-img img { width: 100%; display: block; }
+
+  /* SECTION */
+  .section { display: grid; grid-template-columns: var(--col-label) 1fr; gap: 40px; padding: 60px 0; border-bottom: 1px solid var(--line); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-size: 10px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-4); padding-top: 5px; line-height: 1.6; }
+  .section-label b { display: block; font-weight: 500; color: var(--red); font-size: 10px; margin-bottom: 2px; }
+  .section-h { font-family: var(--serif); font-size: 25px; font-weight: 400; line-height: 1.25; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 18px; }
+  .section-p { font-size: 15px; line-height: 1.8; color: var(--ink-2); }
+  .section-p + .section-p { margin-top: 10px; }
+
+  /* QUOTE */
+  .pullquote { border-left: 2px solid var(--red); padding: 4px 0 4px 18px; margin: 24px 0; }
+  .pullquote p { font-family: var(--serif); font-size: 18px; line-height: 1.6; font-style: italic; color: var(--ink); }
+
+  /* SUB-LABEL */
+  .sub-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 10px; }
+
+  /* IMAGES */
+  .img-full { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); margin-top: 16px; }
+  .img-full img { width: 100%; display: block; }
+  .img-grid { display: grid; gap: 8px; margin-top: 16px; }
+  .img-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .img-grid-item { border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+  .img-grid-item img { width: 100%; display: block; }
+  .img-grid-item figcaption { font-size: 11px; color: var(--ink-3); padding: 7px 10px; background: var(--bg-2); }
+
+  /* ===================== */
+  /* TAB COMPONENT         */
+  /* ===================== */
+  .tabs-wrap { margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg); }
+  .tabs-bar { display: flex; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+  .tabs-bar::-webkit-scrollbar { display: none; }
+  .tab-btn { flex-shrink: 0; padding: 10px 16px; font-size: 12px; font-weight: 500; color: var(--ink-3); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.15s, border-color 0.15s; white-space: nowrap; font-family: var(--sans); }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
+  .tab-panels { position: relative; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .tab-panel img { width: 100%; display: block; }
+  .tab-panel-caption { font-size: 11px; color: var(--ink-3); padding: 10px 14px; border-top: 1px solid var(--line); background: var(--bg-2); }
+
+  /* ===================== */
+  /* STEP WALKTHROUGH      */
+  /* ===================== */
+  .walkthrough { margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .walkthrough-img { position: relative; background: var(--bg-2); }
+  .walkthrough-img img { width: 100%; display: block; }
+  .walkthrough-img .step-badge { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.65); color: #fff; font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 12px; letter-spacing: 0.04em; }
+  .walkthrough-nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-top: 1px solid var(--line); background: var(--bg); gap: 12px; }
+  .walkthrough-caption { font-size: 12px; color: var(--ink-2); flex: 1; }
+  .walkthrough-btns { display: flex; gap: 6px; }
+  .wk-btn { width: 28px; height: 28px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--ink-2); transition: background 0.1s; }
+  .wk-btn:hover { background: var(--bg-2); }
+  .wk-btn:disabled { opacity: 0.3; cursor: default; }
+  .walkthrough-dots { display: flex; gap: 5px; align-items: center; }
+  .wk-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-4); cursor: pointer; transition: background 0.15s; }
+  .wk-dot.active { background: var(--ink); }
+
+  /* ===================== */
+  /* BEFORE/AFTER TOGGLE   */
+  /* ===================== */
+  .ba-block { margin-top: 24px; }
+  .ba-pair { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+  .ba-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--bg-2); }
+  .ba-title { font-size: 12px; font-weight: 500; color: var(--ink); }
+  .ba-toggle { display: flex; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; }
+  .ba-toggle-btn { padding: 4px 10px; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; color: var(--ink-3); font-family: var(--sans); transition: all 0.15s; }
+  .ba-toggle-btn.active { background: var(--ink); color: #fff; }
+  .ba-images { position: relative; }
+  .ba-img { display: none; width: 100%; }
+  .ba-img.active { display: block; }
+  .ba-img img { width: 100%; display: block; }
+  .ba-label-pill { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 10px; }
+  .ba-label-pill.before { background: #f0f0f0; color: var(--ink-3); }
+  .ba-label-pill.after { background: #e6f4ec; color: #2d7d46; }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+  .card-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 7px; }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 5px; line-height: 1.4; }
+  .card-body { font-size: 13px; line-height: 1.65; color: var(--ink-2); }
+
+  /* ISSUES */
+  .issues { margin-top: 16px; display: flex; flex-direction: column; gap: 1px; }
+  .issue { display: flex; align-items: center; gap: 14px; padding: 10px 14px; background: var(--bg-2); border-radius: 4px; font-size: 14px; color: var(--ink-2); }
+  .issue-n { font-size: 11px; font-weight: 500; color: var(--red); min-width: 20px; }
+
+  /* STEPS LIST */
+  .steps-list { margin-top: 16px; display: flex; flex-direction: column; gap: 1px; }
+  .step-item { display: grid; grid-template-columns: 20px 1fr; gap: 14px; padding: 13px 14px; background: var(--bg-2); border-radius: 4px; align-items: start; }
+  .step-n { font-size: 11px; font-weight: 500; color: var(--red); padding-top: 2px; }
+  .step-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+  .step-desc { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+  .stat { background: var(--bg-2); border-radius: 6px; padding: 14px 16px; }
+  .stat-n { font-family: var(--serif); font-size: 28px; font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 5px; }
+  .stat-l { font-size: 12px; color: var(--ink-3); line-height: 1.4; }
+
+  /* PRINCIPLES */
+  .principles { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .principle { background: var(--bg-2); border-radius: 8px; padding: 16px; }
+  .principle-n { font-size: 10px; font-weight: 500; color: var(--red); margin-bottom: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .principle-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 5px; line-height: 1.4; }
+  .principle-desc { font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  /* RESULT */
+  .result-card { background: var(--ink); border-radius: 10px; padding: 44px 36px; margin-top: 24px; }
+  .result-card h3 { font-family: var(--serif); font-size: 26px; font-weight: 400; color: #fff; line-height: 1.3; margin-bottom: 14px; }
+  .result-card p { font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.6); max-width: 440px; }
+  .result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+  .result-stat { padding: 16px 20px; background: rgba(255,255,255,0.07); border-radius: 6px; }
+  .result-stat-n { font-family: var(--serif); font-size: 34px; font-weight: 400; color: #fff; margin-bottom: 5px; }
+  .result-stat-l { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+  /* REFRAME */
+  .reframe { padding: 16px 18px; background: var(--bg-2); border-radius: 8px; margin-top: 20px; }
+  .reframe-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 8px; }
+  .reframe p { font-size: 15px; line-height: 1.7; color: var(--ink-2); }
+  .reframe em { font-style: italic; color: var(--ink); }
+
+  .outcome-row { display: flex; justify-content: space-between; align-items: center; padding: 13px 16px; border: 1px solid var(--line); border-radius: 6px; margin-top: 20px; }
+  .outcome-l { font-size: 13px; color: var(--ink-3); }
+  .outcome-r { font-size: 14px; font-weight: 500; color: var(--ink); }
+
+  @media (max-width: 640px) {
+    .section { grid-template-columns: 1fr; gap: 14px; }
+    .meta-grid { grid-template-columns: repeat(2, 1fr); }
+    .meta-item:nth-child(2) { border-right: none; }
+    .cards, .principles { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .img-grid.cols-2 { grid-template-columns: 1fr; }
+    .result-stats { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#">Kai Wei</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#opportunity">Opportunity</a></li>
+      <li><a href="#demo">First demo</a></li>
+      <li><a href="#design">Design v1</a></li>
+      <li><a href="#feedback">Feedback</a></li>
+      <li><a href="#iteration">Iteration</a></li>
+      <li><a href="#result">Result</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <div class="hero-eyebrow">Product Design · OpenLoop · 2025</div>
+    <h1 class="hero-title">Helping anyone launch<br>a telehealth brand</h1>
+    <p class="hero-sub">OpenLoop already owned the clinical infrastructure. The missing layer was a productised setup experience — one that could turn a brand idea into a live healthcare business in days, not months.</p>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="meta-label">Role</div><div class="meta-value">Lead designer</div></div>
+      <div class="meta-item"><div class="meta-label">Timeline</div><div class="meta-value">8 months</div></div>
+      <div class="meta-item"><div class="meta-label">Platform</div><div class="meta-value">Web SaaS</div></div>
+      <div class="meta-item"><div class="meta-label">Outcome</div><div class="meta-value">50+ clients, 2 days</div></div>
+    </div>
+    <div class="hero-img">
+      <img src="src/assets/images/AI CAPABILITY DIRECTION WORKSHOP - sep 2025.jpg" alt="AI Capability Direction Workshop">
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div class="section" id="research">
+    <div class="section-label"><b>Research</b></div>
+    <div>
+      <h2 class="section-h">Can AI Create New Revenue?</h2>
+      <p class="section-p">We surveyed the AI landscape across healthcare and generated multiple product directions. On paper, many of them looked commercially attractive.</p>
+      <p class="section-p">After discussing with customers and industry leaders at a healthcare conference, we realised the market was already crowded — and the real opportunity was hiding inside our own company.</p>
+      <div class="cards">
+        <div class="card"><div class="card-tag">Ruled out</div><div class="card-title">AI Scribe</div><div class="card-body">Heavily commoditised with little defensible moat against established players.</div></div>
+        <div class="card"><div class="card-tag">Ruled out</div><div class="card-title">Clinical assistant</div><div class="card-body">EHR incumbents already own this layer with deep moats and enterprise contracts.</div></div>
+        <div class="card"><div class="card-tag">Ruled out</div><div class="card-title">Compliance</div><div class="card-body">Useful as a feature, but weak as a standalone revenue engine.</div></div>
+        <div class="card"><div class="card-tag">Ruled out</div><div class="card-title">Analytics</div><div class="card-body">Too detached from core care workflow to justify a standalone product.</div></div>
+      </div>
+      <div class="reframe">
+        <div class="reframe-label">The reframe</div>
+        <p>From <em>"What AI products could we build?"</em> → <em>"Which of our existing capabilities could AI make impossible to replicate?"</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPPORTUNITY -->
+  <div class="section" id="opportunity">
+    <div class="section-label"><b>Opportunity</b></div>
+    <div>
+      <h2 class="section-h">The Opportunity Was Already There</h2>
+      <p class="section-p">OpenLoop already handles the hard parts of telehealth — clinical operations, pharmacy workflows, compliance. Past customers were established enterprises who just needed the clinical layer.</p>
+      <p class="section-p">But creators, influencers, and small wellness brands increasingly had audiences — but no way to build a telehealth business on top of it.</p>
+      <div class="pullquote">
+        <p>Use AI to turn OpenLoop's complex medical capabilities into something anyone can configure, launch, and operate.</p>
+      </div>
+      <div class="sub-label">Early brand surface concepts</div>
+      <div class="img-grid cols-2">
+        <figure class="img-grid-item">
+          <img src="src/assets/images/launchpad-v1/branding-example.jpg" alt="Brand surface example">
+          <figcaption>Generated brand surface</figcaption>
+        </figure>
+        <figure class="img-grid-item">
+          <img src="src/assets/images/launchpad-v1/branding-preview.jpg" alt="Brand preview">
+          <figcaption>Brand preview variations</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIRST DEMO -->
+  <div class="section" id="demo">
+    <div class="section-label"><b>First demo</b></div>
+    <div>
+      <h2 class="section-h">Building Belief Before Building the Product</h2>
+      <p class="section-p">The idea sounded promising. But without anything similar on the market, it all lived in our heads. So we built a working demo with engineers — a 5-step flow showing how anyone could launch a telehealth brand with AI.</p>
+      <div class="outcome-row">
+        <span class="outcome-l">Demo outcome</span>
+        <span class="outcome-r">Pitch approved. Project greenlit.</span>
+      </div>
+
+      <div class="sub-label">Interactive demo walkthrough</div>
+      <!-- WALKTHROUGH COMPONENT -->
+      <div class="walkthrough" id="wk-demo">
+        <div class="walkthrough-img">
+          <img class="wk-slide" src="" alt="">
+          <span class="step-badge wk-step-label"></span>
+        </div>
+        <div class="walkthrough-nav">
+          <span class="walkthrough-caption wk-caption"></span>
+          <div class="walkthrough-dots wk-dots"></div>
+          <div class="walkthrough-btns">
+            <button class="wk-btn wk-prev">←</button>
+            <button class="wk-btn wk-next">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESIGN V1 -->
+  <div class="section" id="design">
+    <div class="section-label"><b>Design v1</b></div>
+    <div>
+      <h2 class="section-h">The Real Work Began After the Demo</h2>
+      <p class="section-p">Winning the pitch was only the beginning. We were no longer designing for an "aha" moment — we were designing for a stable, reliable product. That required four connected capability layers.</p>
+
+      <div class="sub-label">Four capability layers</div>
+      <!-- TABS: Architecture -->
+      <div class="tabs-wrap" id="tabs-arch">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="0">Brand surface</button>
+          <button class="tab-btn" data-tab="1">Launch operations</button>
+          <button class="tab-btn" data-tab="2">Client & patient portals</button>
+          <button class="tab-btn" data-tab="3">Compliance</button>
+        </div>
+        <div class="tab-panels">
+          <!-- Brand surface -->
+          <div class="tab-panel active" data-panel="0">
+            <div class="tabs-wrap" id="tabs-brand" style="border:none; border-radius:0;">
+              <div class="tabs-bar" style="background:#fafafa;">
+                <button class="tab-btn active" data-tab="0">Example</button>
+                <button class="tab-btn" data-tab="1">Variations</button>
+              </div>
+              <div class="tab-panels">
+                <div class="tab-panel active" data-panel="0">
+                  <img src="src/assets/images/launchpad-v1/branding-example.jpg" alt="Brand surface example">
+                  <div class="tab-panel-caption">Generated brand surface — colours, typography, and storefront copy derived from the audience profile</div>
+                </div>
+                <div class="tab-panel" data-panel="1">
+                  <img src="src/assets/images/launchpad-v1/branding-preview.jpg" alt="Brand preview">
+                  <div class="tab-panel-caption">Multiple brand surface variations generated from the same inputs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Launch operations -->
+          <div class="tab-panel" data-panel="1">
+            <div class="tabs-wrap" id="tabs-ops" style="border:none; border-radius:0;">
+              <div class="tabs-bar" style="background:#fafafa;">
+                <button class="tab-btn active" data-tab="0">Store management</button>
+                <button class="tab-btn" data-tab="1">Client management</button>
+                <button class="tab-btn" data-tab="2">Commerce</button>
+                <button class="tab-btn" data-tab="3">Journey</button>
+                <button class="tab-btn" data-tab="4">Communication</button>
+              </div>
+              <div class="tab-panels">
+                <div class="tab-panel active" data-panel="0"><img src="src/assets/images/launch-ops/store-management.jpg" alt="Store management"><div class="tab-panel-caption">Store management dashboard</div></div>
+                <div class="tab-panel" data-panel="1"><img src="src/assets/images/launch-ops/client-management.jpg" alt="Client management"><div class="tab-panel-caption">Client management</div></div>
+                <div class="tab-panel" data-panel="2"><img src="src/assets/images/launch-ops/commerce.jpg" alt="Commerce"><div class="tab-panel-caption">Commerce</div></div>
+                <div class="tab-panel" data-panel="3"><img src="src/assets/images/launch-ops/journey.jpg" alt="Journey"><div class="tab-panel-caption">Patient journey</div></div>
+                <div class="tab-panel" data-panel="4"><img src="src/assets/images/launch-ops/communication.jpg" alt="Communication"><div class="tab-panel-caption">Communication</div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Portals -->
+          <div class="tab-panel" data-panel="2">
+            <div class="tabs-wrap" id="tabs-portals" style="border:none; border-radius:0;">
+              <div class="tabs-bar" style="background:#fafafa;">
+                <button class="tab-btn active" data-tab="0">Client portal</button>
+                <button class="tab-btn" data-tab="1">Patient portal</button>
+              </div>
+              <div class="tab-panels">
+                <div class="tab-panel active" data-panel="0"><img src="src/assets/images/launchpad-v1/client-portal.jpg" alt="Client portal"><div class="tab-panel-caption">Client portal — performance and operations visibility</div></div>
+                <div class="tab-panel" data-panel="1"><img src="src/assets/images/launchpad-v1/patient-portal.jpg" alt="Patient portal"><div class="tab-panel-caption">Patient portal — self-service for orders, appointments, and follow-up care</div></div>
+              </div>
+            </div>
+          </div>
+          <!-- Compliance -->
+          <div class="tab-panel" data-panel="3">
+            <img src="src/assets/images/launchpad-v1/consent.jpg" alt="Compliance and consent">
+            <div class="tab-panel-caption">Compliance — review, consent settings, communications, and audit records</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK -->
+  <div class="section" id="feedback">
+    <div class="section-label"><b>Users feedback</b></div>
+    <div>
+      <h2 class="section-h">Real Users Arrived Faster Than Expected</h2>
+      <div class="pullquote"><p>"Within two days, more than 50 clients reached out."</p></div>
+      <p class="section-p">As MedVi — an OpenLoop customer — went viral and was covered by NYTimes, the first wave of real customers arrived. Their feedback pointed to a completely different problem than the team had anticipated.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">Research methods</div></div>
+        <div class="stat"><div class="stat-n">8</div><div class="stat-l">SME interviews</div></div>
+        <div class="stat"><div class="stat-n">35</div><div class="stat-l">Usability sessions</div></div>
+        <div class="stat"><div class="stat-n">2mo</div><div class="stat-l">Research cycle</div></div>
+      </div>
+      <div class="sub-label">Research artefacts</div>
+      <div class="img-grid cols-2">
+        <figure class="img-grid-item">
+          <img src="src/assets/images/launchpad-v1/research/user-testing.jpg" alt="User testing">
+          <figcaption>Usability sessions</figcaption>
+        </figure>
+        <figure class="img-grid-item">
+          <img src="src/assets/images/launchpad-v1/research/telehealth-launch-workflow.png" alt="Workflow mapping">
+          <figcaption>Telehealth launch workflow mapping</figcaption>
+        </figure>
+      </div>
+      <div class="sub-label">CMO review findings</div>
+      <div class="img-full"><img src="src/assets/images/launchpad-v1/research/cmo-issues-confusion.png" alt="CMO issues"></div>
+      <div class="issues" style="margin-top:12px;">
+        <div class="issue"><span class="issue-n">01</span>Users could not tell who should act</div>
+        <div class="issue"><span class="issue-n">02</span>AI felt absent at key moments</div>
+        <div class="issue"><span class="issue-n">03</span>Generated content felt random</div>
+        <div class="issue"><span class="issue-n">04</span>Options had text but no preview</div>
+        <div class="issue"><span class="issue-n">05</span>Generated content missed the brand tone</div>
+        <div class="issue"><span class="issue-n">06</span>Minimal UI made the next step unclear</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ITERATION -->
+  <div class="section" id="iteration">
+    <div class="section-label"><b>Iteration</b></div>
+    <div>
+      <h2 class="section-h">The Best AI Stays Out of the Way</h2>
+      <p class="section-p">In the demo, AI Chat made the product feel intelligent. But real onboarding is not a demo. Users are there to complete setup and launch — not to explore AI.</p>
+      <div class="pullquote"><p>"Sometimes the best AI is the one that does not pull attention away from the task."</p></div>
+      <div class="principles">
+        <div class="principle"><div class="principle-n">Principle 01</div><div class="principle-title">Making the launch process legible</div><div class="principle-desc">Workflow-level IA so users always know where they are and what remains.</div></div>
+        <div class="principle"><div class="principle-n">Principle 02</div><div class="principle-title">Rethinking how products are presented</div><div class="principle-desc">From blank chat to AI recommendation summary. From data table to card grid.</div></div>
+        <div class="principle"><div class="principle-n">Principle 03</div><div class="principle-title">Making brand generation iterative</div><div class="principle-desc">Generate More and Refine with AI replaced destructive regeneration.</div></div>
+        <div class="principle"><div class="principle-n">Principle 04</div><div class="principle-title">Seeing decisions before committing</div><div class="principle-desc">Live storefront preview updated in real time as brand choices were made.</div></div>
+      </div>
+
+      <div class="sub-label">Before & after — 6 redesigned flows</div>
+      <div class="ba-block" id="ba-section">
+        <!-- pairs populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="section" id="result">
+    <div class="section-label"><b>Result</b></div>
+    <div>
+      <h2 class="section-h">From Demo Concept to Live Launch System</h2>
+      <p class="section-p">What began as a strategic question — can AI create new revenue? — became a product that compressed months of telehealth setup into a single guided session.</p>
+      <div class="result-card">
+        <h3>LaunchPad went from internal concept<br>to live product in under a year.</h3>
+        <p>The first real signal came not from a planned rollout, but from a single customer going viral. Within 48 hours, 50+ brands had reached out. The infrastructure held.</p>
+        <div class="result-stats">
+          <div class="result-stat"><div class="result-stat-n">50+</div><div class="result-stat-l">Clients in first 48 hours</div></div>
+          <div class="result-stat"><div class="result-stat-n">8mo</div><div class="result-stat-l">Concept to live product</div></div>
+          <div class="result-stat"><div class="result-stat-n">1</div><div class="result-stat-l">Session to launch a brand</div></div>
+        </div>
+      </div>
+
+      <div class="sub-label">Final product — V2</div>
+      <!-- TABS: Final product -->
+      <div class="tabs-wrap" id="tabs-final">
+        <div class="tabs-bar">
+          <button class="tab-btn active" data-tab="0">Storefront</button>
+          <button class="tab-btn" data-tab="1">Website preview</button>
+          <button class="tab-btn" data-tab="2">Product recommendation</button>
+          <button class="tab-btn" data-tab="3">Brand identity</button>
+          <button class="tab-btn" data-tab="4">Logo</button>
+          <button class="tab-btn" data-tab="5">Stepper</button>
+        </div>
+        <div class="tab-panels">
+          <div class="tab-panel active" data-panel="0"><img src="src/assets/images/launchpad-v2/storefront.jpg" alt="Storefront"><div class="tab-panel-caption">Generated storefront — V2</div></div>
+          <div class="tab-panel" data-panel="1"><img src="src/assets/images/launchpad-v2/website-preview.jpg" alt="Website preview"><div class="tab-panel-caption">Live website preview</div></div>
+          <div class="tab-panel" data-panel="2"><img src="src/assets/images/launchpad-v2/product-recommendation.jpg" alt="Product recommendation"><div class="tab-panel-caption">AI product recommendation</div></div>
+          <div class="tab-panel" data-panel="3"><img src="src/assets/images/launchpad-v2/edit-brand-identity.jpg" alt="Brand identity"><div class="tab-panel-caption">Edit brand identity</div></div>
+          <div class="tab-panel" data-panel="4"><img src="src/assets/images/launchpad-v2/logo.jpg" alt="Logo"><div class="tab-panel-caption">Logo creation</div></div>
+          <div class="tab-panel" data-panel="5"><img src="src/assets/images/launchpad-v2/stepper.jpg" alt="Stepper"><div class="tab-panel-caption">Progress stepper — workflow-level IA</div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:32px; padding-top:22px; border-top:1px solid var(--line);">
+        <p style="font-size:13px; color:#bbb;">Product design lead — Kai Wei &ensp;·&ensp; 2025 &ensp;·&ensp; OpenLoop Health</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========== TAB LOGIC ==========
+function initTabs(wrapper) {
+  const btns = wrapper.querySelectorAll(':scope > .tabs-bar > .tab-btn');
+  const panels = wrapper.querySelectorAll(':scope > .tab-panels > .tab-panel');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.dataset.tab;
+      btns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      wrapper.querySelector(`:scope > .tab-panels > .tab-panel[data-panel="${idx}"]`).classList.add('active');
+    });
+  });
+  // init nested tabs
+  wrapper.querySelectorAll('.tabs-wrap').forEach(nested => initTabs(nested));
+}
+document.querySelectorAll('.tabs-wrap').forEach(w => {
+  // only init top-level; nested handled recursively
+  if (!w.closest('.tabs-wrap')) initTabs(w);
+});
+
+// ========== WALKTHROUGH ==========
+const wkData = [
+  { src: 'src/assets/images/demo-steps/user-persona-form.jpg',          caption: 'Step 01 — Define target audience', label: '01 / 05' },
+  { src: 'src/assets/images/demo-steps/add-products-1.jpg',             caption: 'Step 02 — AI product recommendations', label: '02 / 05' },
+  { src: 'src/assets/images/demo-steps/branding-color-2-customise.jpg', caption: 'Step 03 — Customise brand colour', label: '03 / 05' },
+  { src: 'src/assets/images/demo-steps/branding-logo.jpg',              caption: 'Step 03 — Generate logo options', label: '03 / 05' },
+  { src: 'src/assets/images/demo-steps/storefront-intake-preview.jpg',  caption: 'Step 04 — Preview intake experience', label: '04 / 05' },
+  { src: 'src/assets/images/demo-steps/storefront-generation-result.jpg', caption: 'Step 04 — Preview storefront', label: '04 / 05' },
+  { src: 'src/assets/images/demo-steps/domain-ready-to-publish.jpg',    caption: 'Step 05 — Choose domain and publish', label: '05 / 05' },
+];
+
+(function() {
+  const wrap = document.getElementById('wk-demo');
+  const img = wrap.querySelector('.wk-slide');
+  const cap = wrap.querySelector('.wk-caption');
+  const badge = wrap.querySelector('.wk-step-label');
+  const dotsWrap = wrap.querySelector('.wk-dots');
+  const prevBtn = wrap.querySelector('.wk-prev');
+  const nextBtn = wrap.querySelector('.wk-next');
+  let cur = 0;
+
+  // build dots
+  wkData.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'wk-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+  });
+
+  function go(i) {
+    cur = i;
+    img.src = wkData[i].src;
+    img.alt = wkData[i].caption;
+    cap.textContent = wkData[i].caption;
+    badge.textContent = wkData[i].label;
+    dotsWrap.querySelectorAll('.wk-dot').forEach((d, j) => d.classList.toggle('active', j === i));
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === wkData.length - 1;
+  }
+
+  prevBtn.addEventListener('click', () => go(cur - 1));
+  nextBtn.addEventListener('click', () => go(cur + 1));
+  go(0);
+})();
+
+// ========== BEFORE/AFTER ==========
+const baPairs = [
+  { title: 'Navigation IA', before: 'src/assets/images/launchpad-v2/compare/navigation-ia-before.jpg', after: 'src/assets/images/launchpad-v2/compare/navigation-ia-after.jpg' },
+  { title: 'Product selection', before: 'src/assets/images/launchpad-v2/compare/add-products-product-table.jpg', after: 'src/assets/images/launchpad-v2/compare/onboarding-product.png' },
+  { title: 'Brand building', before: 'src/assets/images/launchpad-v2/compare/step04-build-brand-before.jpg', after: 'src/assets/images/launchpad-v2/compare/step04-build-brand-after.jpg' },
+  { title: 'Color selection', before: 'src/assets/images/launchpad-v2/compare/step05-color-before.jpg', after: 'src/assets/images/launchpad-v2/compare/step05-color-after.jpg' },
+  { title: 'Logo creation', before: 'src/assets/images/launchpad-v2/compare/step05-logo-before.jpg', after: 'src/assets/images/launchpad-v2/compare/step05-logo-after.jpg' },
+  { title: 'Site design', before: 'src/assets/images/launchpad-v2/compare/step06-design-site-before.jpg', after: 'src/assets/images/launchpad-v2/compare/step06-design-site-after.jpg' },
+];
+
+const baSection = document.getElementById('ba-section');
+baPairs.forEach(pair => {
+  const el = document.createElement('div');
+  el.className = 'ba-pair';
+  el.innerHTML = `
+    <div class="ba-header">
+      <span class="ba-title">${pair.title}</span>
+      <div class="ba-toggle">
+        <button class="ba-toggle-btn active" data-side="before">Before</button>
+        <button class="ba-toggle-btn" data-side="after">After</button>
+      </div>
+    </div>
+    <div class="ba-images">
+      <div class="ba-img active" data-img="before"><img src="${pair.before}" alt="${pair.title} before"></div>
+      <div class="ba-img" data-img="after"><img src="${pair.after}" alt="${pair.title} after"></div>
+    </div>`;
+  baSection.appendChild(el);
+
+  el.querySelectorAll('.ba-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const side = btn.dataset.side;
+      el.querySelectorAll('.ba-toggle-btn').forEach(b => b.classList.remove('active'));
+      el.querySelectorAll('.ba-img').forEach(i => i.classList.remove('active'));
+      btn.classList.add('active');
+      el.querySelector(`.ba-img[data-img="${side}"]`).classList.add('active');
+    });
+  });
+});
+
+// ========== NAV ACTIVE HIGHLIGHT ==========
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('.section, .hero');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => s.id && io.observe(s));
+</script>
+
+</body>
+</html>

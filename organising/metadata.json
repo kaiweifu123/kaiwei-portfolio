@@ -1,0 +1,6 @@
+{
+  "name": "ACS Archive",
+  "description": "An interactive, elegant syllabus and archive explorer for the Architectural and Cinematic Seminar series.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

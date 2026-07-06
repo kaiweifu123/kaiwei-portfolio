@@ -1,0 +1,307 @@
+/*
+======================================================
+Design Tokens
+Single Source of Truth
+
+This file defines the visual language for the project.
+
+Do not hardcode colours, spacing, typography, radius,
+or layout values inside components.
+
+Always reference tokens from this file.
+
+Last updated: 2026-06-25
+======================================================
+*/
+
+:root {
+  /* ======================================================
+     Colour Tokens
+     ====================================================== */
+
+  /* Surfaces */
+  --surface-app: #ffffff;
+  --surface-page: #ffffff;
+  --surface-section: #F6F6F4;
+  --surface-nav: var(--surface-section);
+  --surface-nav-translucent: rgb(246 246 244 / 0.82);
+  --surface-10: #FAFAFA;
+  --surface-section-subtle: var(--surface-section);
+  --surface-base: #ffffff;
+  --surface-panel: var(--surface-section);
+  --surface-muted: var(--surface-section);
+  --surface-callout: var(--surface-section);
+  --surface-control: var(--surface-section);
+  --surface-control-hover: var(--surface-section);
+  --surface-active-warm: var(--surface-section);
+  --surface-active-cool: var(--surface-section);
+  --surface-annotation: var(--surface-section);
+  --surface-sidebar: var(--surface-section);
+  --surface-sidebar-hover: var(--surface-section);
+  --surface-app-hover: var(--surface-section);
+  --surface-inverse: #191919;
+  --surface-scrollbar: #dcd7cd;
+  --surface-scrollbar-hover: #bbb6ac;
+
+  /* Text */
+  --text-primary: #33302D;
+  --text-strong: #121212;
+  --text-hero-display: #0a0a0a;
+  --text-app: #121212;
+  --text-secondary: #5F534A;
+  --text-secondary-neutral: #4a4a4a;
+  --text-tertiary: #6f6f6f;
+  --text-tertiary-neutral: var(--text-tertiary);
+  --text-muted: #9A8878;
+  --text-subtle: #B0A898;
+  --text-faint: #C8BFB5;
+  --text-inverse: #f4f1ea;
+  --text-sidebar-primary: #202020;
+  --text-sidebar-secondary: #747474;
+  --color-text-primary: var(--text-strong);
+  --color-text-secondary: var(--text-secondary-neutral);
+
+  /* Accents */
+  --color-primary: #db3334;
+  --color-primary-hover: rgba(219, 51, 52, 0.06);
+  --color-primary-active: rgba(219, 51, 52, 0.04);
+  --accent-sage: #4A7260;
+  --accent-sage-muted: #7A8A85;
+  --accent-brown: var(--color-primary);
+  --accent-brown-soft: var(--color-primary);
+  --accent-before: var(--color-primary);
+  --accent-after: #315d73;
+  --accent-after-border: #6f91a8;
+
+  /* Links */
+  --color-link: #4f6f9f;
+  --color-link-hover: #38587f;
+  --color-link-decoration: #9fb2cf;
+  --color-link-decoration-hover: #6f8db6;
+  --color-badge-danger: #dc2626;
+  --color-badge-danger-border: #fca5a5;
+  --color-badge-warning: #d97706;
+  --color-badge-warning-border: #fcd34d;
+  --color-success: #00B661;
+  --color-success-bg: rgba(0, 182, 97, 0.08);
+  --color-success-border: rgba(0, 182, 97, 0.24);
+
+  /* Borders and dividers */
+  --border-soft-color: #E8E0D8;
+  --border-default-color: #DDD6CE;
+  --border-subtle-color: #dcd7cd;
+  --border-sidebar-color: #d7d1c7;
+  --border-frame-color: #d8d1c8;
+  --border-cool-color: #C9D8E1;
+  --border-emphasis-color: var(--color-primary);
+  --border-before-color: var(--color-primary);
+  --border-after-color: #6f91a8;
+
+  /* Overlays */
+  --overlay-image-subtle: rgba(0, 0, 0, 0.05);
+  --overlay-control: rgba(255, 255, 255, 0.85);
+  --overlay-modal: rgba(0, 0, 0, 0.6);
+
+  /* ======================================================
+     Typography Tokens
+     ====================================================== */
+
+  /* Font families */
+  --font-ui-family: "Graphik", "Graphik Web", "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-display-family: var(--font-quote-family);
+  --font-body-family: var(--font-ui-family);
+  --font-heading-family: var(--font-quote-family);
+  --font-hero-display-family: var(--font-quote-family);
+  --font-hero-subtitle-family: var(--font-quote-family);
+  --font-chip-family: var(--font-ui-family);
+  --font-editorial-serif-family: "Playfair Display", Georgia, Cambria, serif;
+  --font-split-narrative-title-family: var(--font-editorial-serif-family);
+  --font-editorial-display-family: var(--font-quote-family);
+  --font-quote-family: "Inter", "Helvetica Neue", Arial, ui-sans-serif, sans-serif;
+  --font-label-family: var(--font-ui-family);
+
+  /* Font weights */
+  --font-weight-nav: 650;
+  --font-weight-hero-title: var(--font-weight-nav);
+  --font-weight-section-title: var(--font-weight-nav);
+  --font-weight-card-title: var(--font-weight-nav);
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-display: 700;
+  --font-weight-project-header: var(--font-weight-nav);
+  --font-weight-project-summary: var(--font-weight-nav);
+  --font-weight-project-meta: 600;
+
+  /* Font sizes */
+  --font-hero-display-size: clamp(28px, 3.2vw, 34px);
+  --font-hero-subtitle-size: clamp(12px, 2vw, 20px);
+  --font-chip-size: clamp(11px, 0.85vw, 12px);
+  --font-display-lg: clamp(32px, 3vw, 48px);
+  --font-heading-xl: clamp(30px, 2.5vw, 36px);
+  --font-banner-title: clamp(30px, 2.5vw, 36px);
+  --font-heading-lg: clamp(20px, 1.8vw, 24px);
+  --font-heading-md: clamp(18px, 1.5vw, 20px);
+  --font-stage-title: clamp(16px, 1.35vw, 18px);
+  --font-body: clamp(14px, 1.05vw, 16px);
+  --font-body-sm: clamp(12px, 0.9vw, 13px);
+  --font-section-label: clamp(11px, 0.85vw, 12px);
+  --font-caption: clamp(11px, 0.85vw, 12px);
+  --font-label: clamp(10px, 0.75vw, 11px);
+  --font-tab: clamp(10px, 0.75vw, 11px);
+  --font-tab-index: clamp(8px, 0.65vw, 9px);
+  --font-annotation: clamp(9px, 0.7vw, 10px);
+  --case-display-md-size: clamp(56px, 5.2vw, 96px);
+  --case-display-sm-size: clamp(24px, 2.35vw, 44px);
+  --case-display-weight: var(--font-weight-display);
+  --case-display-sm-line-height: 1.02;
+  --case-project-header-size: clamp(16px, 1.2vw, 22px);
+  --case-project-header-weight: var(--font-weight-project-header);
+  --case-project-header-line-height: 1.1;
+  --case-project-summary-size: clamp(16px, 1.45vw, 26px);
+  --case-project-summary-weight: var(--font-weight-project-summary);
+  --case-project-summary-line-height: 1.22;
+  --case-project-copy-compact-size: clamp(14px, 1.05vw, 17px);
+
+  /* Line heights */
+  --line-height-hero-display: 1.2;
+  --line-height-hero-subtitle: 1.22;
+  --line-height-progress-title: 1.5;
+  --line-height-tight: 1.1;
+  --line-height-heading: 1.15;
+  --line-height-title: 1.3;
+  --line-height-block: 1.5;
+  --line-height-body: 1.7;
+  --line-height-compact: 1;
+
+  /* Letter spacing */
+  --tracking-label: 0.1em;
+  --tracking-section-label: 0.14em;
+  --tracking-header-label: 0.2em;
+  --tracking-control: 0.08em;
+  --tracking-chip: -0.01em;
+  --tracking-hero-display: -0.035em;
+  --tracking-hero-subtitle: -0.01em;
+
+  /* ======================================================
+     Spacing Tokens
+     ====================================================== */
+
+  --space-2xs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
+  --space-3xl: 32px;
+  --space-4xl: 40px;
+  --space-5xl: 48px;
+  --space-6xl: 64px;
+  --space-7xl: 80px;
+
+  --space-inline: clamp(6px, 0.6vw, 8px);
+  --space-control-x: clamp(10px, 0.9vw, 12px);
+  --space-control-y: clamp(4px, 0.45vw, 6px);
+  --space-component: clamp(12px, 1.2vw, 16px);
+  --space-component-lg: clamp(18px, 1.7vw, 24px);
+  --space-section: clamp(40px, 3.4vw, 48px);
+  --space-section-padding-y: clamp(40px, 5vw, 64px);
+  --space-section-header-body: clamp(18px, 1.7vw, 24px);
+  --space-section-body-element: clamp(12px, 1.4vw, 16px);
+  --space-layout-gap-lg: clamp(24px, 2.3vw, 32px);
+  --space-text-stack: clamp(6px, 0.6vw, 8px);
+  --space-page-x: clamp(16px, 1.67vw, 24px);
+  --space-page-x-desktop: clamp(32px, 3.334vw, 48px);
+  --space-card-sm: clamp(6px, 0.6vw, 8px);
+  --space-card-md: clamp(12px, 1.2vw, 16px);
+  --space-card-lg: clamp(16px, 2vw, 24px);
+  --space-progress-title-gap: 4px;
+
+  /* ======================================================
+     Radius Tokens
+     ====================================================== */
+
+  --radius-none: 0;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ======================================================
+     Border Tokens
+     ====================================================== */
+
+  --border-width: 1px;
+  --border-width-emphasis: 1.5px;
+  --border-width-callout: 2px;
+
+  --border-soft: var(--border-width) solid var(--border-soft-color);
+  --border-default: var(--border-width) solid var(--border-default-color);
+  --border-subtle: var(--border-width) solid var(--border-subtle-color);
+  --border-sidebar: var(--border-width) solid var(--border-sidebar-color);
+  --border-frame: var(--border-width) solid var(--border-frame-color);
+  --border-cool: var(--border-width) solid var(--border-cool-color);
+  --border-emphasis: var(--border-width-emphasis) solid var(--border-emphasis-color);
+  --border-callout: var(--border-width-callout) solid var(--accent-brown-soft);
+
+  /* ======================================================
+     Shadow Tokens
+     ====================================================== */
+
+  --shadow-control: 0 1px 2px rgba(18, 18, 18, 0.08);
+  --shadow-card: 0 2px 8px rgba(18, 18, 18, 0.08);
+  --shadow-floating: 0 4px 8px rgba(18, 18, 18, 0.10);
+  --shadow-showcase: 0 10px 30px rgba(18, 18, 18, 0.08);
+  --shadow-active-indicator: inset 0 2px 0 var(--accent-brown);
+
+  /* ======================================================
+     Motion Tokens
+     ====================================================== */
+
+  --motion-duration-fast: 140ms;
+  --motion-duration-standard: 220ms;
+  --motion-duration-issue-dismiss: 260ms;
+  --motion-duration-issue-restack: 380ms;
+  --motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-issue-dismiss: cubic-bezier(0.4, 0, 1, 1);
+  --motion-ease-issue-restack: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ======================================================
+     Layout Tokens
+     ====================================================== */
+
+  --container-main: 1200px;
+  --container-content: 640px;
+  --container-section-body: 720px;
+  --container-showcase: 960px;
+  --container-artifact: 92%;
+  --sidebar-width: 320px;
+  --sidebar-z-index: 50;
+  --sidebar-item-height: 80px;
+  --sidebar-bottom-reserve: 92px;
+  --sidebar-phase-indent: 48px;
+  --sidebar-control-bottom: 22px;
+  --hero-media-width: calc(100vw - var(--sidebar-width));
+  --scrollbar-size: 6px;
+
+  /* ======================================================
+     Component Tokens
+     ====================================================== */
+
+  --issue-card-stack-peek: 14px;
+  --issue-card-stack-dismiss-y: 56px;
+  --issue-card-stack-dismiss-scale: 0.88;
+  --issue-card-stack-rank-scale-step: 0.035;
+  --split-narrative-aside-width: 240px;
+  --showcase-frame-padding: var(--space-sm);
+  --showcase-panel-padding: var(--space-card-lg);
+  --showcase-row-min: 180px;
+  --showcase-media-radius: var(--radius-md);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --container-artifact: 100%;
+  }
+}
