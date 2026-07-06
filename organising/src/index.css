@@ -1577,6 +1577,10 @@ body {
   margin: 0;
 }
 
+.info-panel-highlight {
+  color: var(--color-primary);
+}
+
 .info-panel-contact {
   margin-top: 34px;
   border-top: 1px solid rgb(23 21 20 / 0.28);

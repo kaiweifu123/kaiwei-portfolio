@@ -100,9 +100,12 @@ export default function InfoOverlay({ onClose }: { onClose: () => void }) {
         <div className="info-panel-body">
           <p>I've always been drawn to unfamiliar places.</p>
           <p>
-            From China to London, across Europe and now collaborating with teams in Silicon Valley, every move has
-            pushed me beyond my comfort zone. Those experiences taught me to approach problems with curiosity,
-            empathy, and an open mind.
+            From <span className="info-panel-highlight">China</span> to <span className="info-panel-highlight">London</span>, across{' '}
+            <span className="info-panel-highlight">Europe</span> and now collaborating with teams in{' '}
+            <span className="info-panel-highlight">Silicon Valley</span>, every move has pushed me beyond my comfort
+            zone. Those experiences taught me to approach problems with{' '}
+            <span className="info-panel-highlight">curiosity</span>, <span className="info-panel-highlight">empathy</span>, and an{' '}
+            <span className="info-panel-highlight">open mind</span>.
           </p>
           <p>
             Over the past six years, I've evolved from an illustrator into a Product Designer, combining creativity
