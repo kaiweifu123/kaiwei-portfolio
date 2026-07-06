@@ -539,7 +539,7 @@ function LazyCaseVideo({
   controls?: boolean;
 }) {
   const videoRef = useInViewVideo<HTMLVideoElement>(!controls);
-  const mediaLoaded = useMediaLoadedClass();
+  const mediaLoaded = useMediaLoadedClass(controls);
 
   return (
     <video
@@ -554,6 +554,7 @@ function LazyCaseVideo({
       preload={controls ? 'metadata' : 'none'}
       onLoadedMetadata={mediaLoaded.onLoadedData}
       onLoadedData={mediaLoaded.onLoadedData}
+      onCanPlay={mediaLoaded.onLoadedData}
     />
   );
 }
