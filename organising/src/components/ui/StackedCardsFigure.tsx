@@ -39,11 +39,11 @@ export default function StackedCardsFigure({
       <FigureFrame
         src={figure.src}
         alt={figure.alt}
-        wrapperClassName="flex h-full min-h-[320px] flex-col justify-center"
-        frameClassName=""
+        wrapperClassName="flex h-full min-h-[320px] flex-col items-center justify-center"
+        frameClassName="w-full"
         imageClassName="block w-full object-contain"
         caption={figure.caption ? (
-          <p className="case-caption-copy mt-[var(--space-text-stack)]">
+          <p className="case-caption-copy mt-[var(--space-text-stack)] w-full">
             {figure.caption}
           </p>
         ) : undefined}
