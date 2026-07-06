@@ -2477,20 +2477,7 @@ body {
   }
 }
 
-@media (max-width: 900px) {
-  .portfolio-nav {
-    align-items: flex-start;
-  }
-
-  .portfolio-hero {
-    min-height: 100svh;
-  }
-
-  .portfolio-hero h1 {
-    max-width: 26ch;
-    font-size: var(--case-display-md-size);
-  }
-
+@media (max-width: 1180px) {
   .work-section {
     grid-template-columns: 1fr;
   }
@@ -2507,7 +2494,22 @@ body {
   }
 
   .work-content {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .portfolio-nav {
+    align-items: flex-start;
+  }
+
+  .portfolio-hero {
+    min-height: 100svh;
+  }
+
+  .portfolio-hero h1 {
+    max-width: 26ch;
+    font-size: var(--case-display-md-size);
   }
 
   .case-study-top-nav-inner {
