@@ -452,7 +452,7 @@ export default function PatientCrmCaseStudy() {
       <CaseHero
         variant="showcase"
         title="Patient CRM"
-        subtitle="A telehealth CRM that unifies fragmented workflows—reducing hours of manual work to seconds."
+        subtitle="A telehealth CRM that unifies fragmented workflows— reducing hours of manual work to seconds."
         chips={['2026', 'Product design', 'Healthcare operations']}
         meta={projectMetaItems}
         artifact={{
