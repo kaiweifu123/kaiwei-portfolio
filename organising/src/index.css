@@ -1408,6 +1408,12 @@ body {
   display: none;
 }
 
+.nav-mobile-only,
+.nav-mobile-section-label,
+.nav-mobile-case-list {
+  display: none;
+}
+
 .nav-menu {
   position: relative;
   display: inline-flex;
@@ -2525,19 +2531,42 @@ body {
 
   .nav-mobile-trigger {
     position: relative;
-    z-index: 101;
-    display: grid;
+    z-index: 102;
+    display: inline-flex;
     flex: 0 0 auto;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: transparent;
+  }
+
+  .nav-mobile-trigger-label {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    padding: 0 var(--space-lg);
+    border-radius: var(--radius-pill);
+    background: var(--surface-app);
+    box-shadow: var(--shadow-control);
+    color: var(--text-strong);
+  }
+
+  .nav-mobile-trigger-icon {
+    position: relative;
+    display: grid;
     width: 42px;
     height: 42px;
     place-items: center;
     border: var(--border-soft);
-    border-radius: var(--radius-button);
-    background: rgb(246 246 244 / 0.78);
-    backdrop-filter: blur(14px);
+    border-radius: var(--radius-pill);
+    background: var(--surface-section);
+    color: var(--text-strong);
+    box-shadow: var(--shadow-control);
   }
 
-  .nav-mobile-trigger span {
+  .nav-mobile-trigger-icon span {
     position: absolute;
     width: 18px;
     height: 2px;
@@ -2546,38 +2575,39 @@ body {
     transition: transform 180ms ease;
   }
 
-  .nav-mobile-trigger span:first-child {
+  .nav-mobile-trigger-icon span:first-child {
     transform: translateY(-4px);
   }
 
-  .nav-mobile-trigger span:last-child {
+  .nav-mobile-trigger-icon span:last-child {
     transform: translateY(4px);
   }
 
-  .nav-mobile-trigger.is-open span:first-child {
+  .nav-mobile-trigger.is-open .nav-mobile-trigger-icon span:first-child {
     transform: rotate(45deg);
   }
 
-  .nav-mobile-trigger.is-open span:last-child {
+  .nav-mobile-trigger.is-open .nav-mobile-trigger-icon span:last-child {
     transform: rotate(-45deg);
   }
 
   .portfolio-nav nav {
-    position: absolute;
-    top: calc(100% + var(--space-xs));
-    right: var(--space-page-x);
+    position: fixed;
+    inset: 0;
     z-index: 100;
     display: grid;
-    min-width: min(78vw, 320px);
-    gap: var(--space-xs);
-    padding: var(--space-sm);
-    border: var(--border-soft);
-    background: rgb(246 246 244 / 0.96);
-    box-shadow: var(--shadow-showcase);
+    align-content: start;
+    gap: var(--space-sm);
+    width: 100vw;
+    min-width: 0;
+    min-height: 100dvh;
+    padding: clamp(116px, 18vh, 148px) var(--space-page-x) var(--space-5xl);
+    background: var(--surface-section);
+    box-shadow: none;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-6px);
-    transition: opacity 160ms ease, transform 160ms ease;
+    transform: translateY(-10px);
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .portfolio-nav nav.is-open {
@@ -2591,35 +2621,54 @@ body {
   .nav-menu-trigger {
     display: block;
     width: 100%;
-    padding: var(--space-xs) var(--space-sm);
+    padding: var(--space-2xs) 0;
+    color: var(--text-strong);
+    font-size: clamp(34px, 10vw, 44px);
+    line-height: var(--line-height-tight);
     text-align: left;
   }
 
+  .nav-mobile-only {
+    display: block;
+  }
+
+  .nav-mobile-section-label {
+    display: block;
+    margin-top: var(--space-2xl);
+    color: var(--text-subtle);
+    font-size: clamp(17px, 5vw, 22px);
+    font-weight: var(--font-weight-nav);
+    line-height: var(--line-height-heading);
+  }
+
+  .portfolio-nav nav > .nav-mobile-section-label:first-child {
+    margin-top: 0;
+  }
+
   .nav-dropdown {
-    position: static;
-    min-width: 0;
-    margin-top: var(--space-2xs);
-    padding: 0 0 0 var(--space-sm);
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
+    display: none;
   }
 
   .nav-dropdown::before {
     display: none;
   }
 
-  .nav-dropdown a {
-    padding: var(--space-2xs) var(--space-sm);
-    color: #6a6561;
+  .nav-mobile-case-list {
+    display: grid;
+    gap: 0;
+  }
+
+  .nav-mobile-case-list a {
+    padding: var(--space-xs) 0;
+    color: var(--text-secondary-neutral);
+    font-size: clamp(18px, 5.6vw, 24px);
+    line-height: var(--line-height-heading);
     white-space: normal;
   }
 
   .nav-menu {
-    display: block;
+    display: grid;
+    gap: 0;
   }
 
   .nav-identity span {

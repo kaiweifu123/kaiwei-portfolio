@@ -55,10 +55,15 @@ export default function PortfolioNav({
         aria-controls="portfolio-primary-nav"
         onClick={() => setIsMenuOpen((current) => !current)}
       >
-        <span />
-        <span />
+        <span className="nav-mobile-trigger-label">More</span>
+        <span className="nav-mobile-trigger-icon" aria-hidden="true">
+          <span />
+          <span />
+        </span>
       </button>
       <nav id="portfolio-primary-nav" className={isMenuOpen ? 'is-open' : ''}>
+        <span className="nav-mobile-section-label">Navigation</span>
+        <a className="nav-mobile-only" href={homeHref} onClick={() => setIsMenuOpen(false)}>Home</a>
         <div className="nav-menu">
           <a className="nav-menu-trigger" href={workHref} aria-haspopup="true" onClick={() => setIsMenuOpen(false)}>
             Product design
@@ -77,6 +82,14 @@ export default function PortfolioNav({
         ) : (
           <a href={aboutHref} onClick={() => setIsMenuOpen(false)}>About</a>
         )}
+        <div className="nav-mobile-case-list" aria-label="Case studies">
+          <span className="nav-mobile-section-label">Case studies</span>
+          {productDesignLinks.map((link) => (
+            <a href={link.href} key={link.href} onClick={() => setIsMenuOpen(false)}>
+              {link.label}
+            </a>
+          ))}
+        </div>
       </nav>
     </header>
   );
