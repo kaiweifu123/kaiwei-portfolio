@@ -1,0 +1,10 @@
+# Whitelist: only the portfolio app is ever committed
+/*
+!/organising
+!/.gitignore
+
+# Inside organising, exclude build artifacts
+organising/node_modules/
+organising/dist/
+organising/server.js
+.DS_Store
