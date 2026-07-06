@@ -551,7 +551,8 @@ function LazyCaseVideo({
       muted
       loop
       playsInline
-      preload="none"
+      preload={controls ? 'metadata' : 'none'}
+      onLoadedMetadata={mediaLoaded.onLoadedData}
       onLoadedData={mediaLoaded.onLoadedData}
     />
   );
