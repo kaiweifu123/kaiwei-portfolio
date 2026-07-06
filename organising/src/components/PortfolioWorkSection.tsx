@@ -41,7 +41,7 @@ const portfolioProjects: PortfolioProject[] = [
     title: 'Launchpad Platform',
     image: '/case-assets/launchpad.jpg',
     video: '/case-assets/launchpad.mp4',
-    description: 'an ai powered infrastructure builder generating $8m+ in monthly revenue',
+    description: 'An AI powered infrastructure builder generating $8m+ in monthly revenue',
     highlights: ['$8m+'],
     tags: ['SaaS', 'AI', 'Telehealthcare', 'Strategy'],
     href: '/preview.html',

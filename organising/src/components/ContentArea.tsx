@@ -721,13 +721,13 @@ export default function ContentArea({
             variant="showcase"
             title={(
               <>
-                Launch enterprise-grade virtual care brand in{' '}
+                Launch an enterprise-grade virtual care brand in{' '}
                 <span className="text-[var(--color-primary)]">as little as a day.</span>
               </>
             )}
             subtitle={(
               <>
-                an ai powered infrastructure builder generating{' '}
+                An AI powered infrastructure builder generating{' '}
                 <span className="text-[var(--color-primary)]">$8m+</span> in monthly revenue
               </>
             )}
