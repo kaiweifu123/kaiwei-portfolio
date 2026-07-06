@@ -480,7 +480,7 @@ export const portfolioCases = [
           },
           {
             "type": "figure",
-            "src": "/case-assets/hireable/assets/figma/extracted/journey-map-2x-fig-52.png",
+            "src": "/case-assets/hireable/assets/testing.png",
             "alt": "Hireable usability testing journey map visual"
           }
         ]
