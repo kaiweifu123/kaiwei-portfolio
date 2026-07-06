@@ -1875,6 +1875,10 @@ body {
   animation: hero-title-in 900ms 80ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.portfolio-hero h1 span {
+  color: var(--color-primary);
+}
+
 .portfolio-hero-comic {
   position: absolute;
   right: clamp(24px, 2.4vw, 46px);
