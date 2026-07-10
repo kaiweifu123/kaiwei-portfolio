@@ -23,6 +23,7 @@ import CaseSegmentTabs from './ui/CaseSegmentTabs';
 import StepImageWalkthrough from './ui/StepImageWalkthrough';
 import FigureFrame from './ui/FigureFrame';
 import Callout from './ui/Callout';
+import SectionHeader from './ui/SectionHeader';
 import SectionShell from './ui/SectionShell';
 import Card from './ui/Card';
 import EditorialHeader from './ui/EditorialHeader';
@@ -140,7 +141,7 @@ const sectionAnchorIds: Record<string, string> = {
 };
 
 const sectionNavLabels: Record<string, string> = {
-  OVERVIEW: 'Overview',
+  OVERVIEW: 'Context',
   'PH-01': 'Research',
   'PH-02': 'Opportunity',
   'PH-03': 'First Demo',
@@ -756,22 +757,35 @@ export default function ContentArea({
           <section id="overview" data-section-reveal className="border-t border-[var(--border-soft-color)] bg-[var(--surface-base)]">
             <div className="mx-auto w-full max-w-[var(--container-main)] px-[var(--space-page-x)] py-[var(--space-section-padding-y)] md:px-[var(--space-page-x-desktop)]">
               <div className="mx-auto max-w-[var(--container-section-body)]">
-                <span className="case-section-label">Overview</span>
+                <SectionHeader
+                  category="Context"
+                  title="What OpenLoop did — and what it wanted to do next"
+                  sysId="Context"
+                  chapterLabel="CONTEXT"
+                  variant="inline"
+                />
 
-                <ContentParagraph>
-                  Today, people can access treatments like weight loss programmes entirely online, creating new opportunities for telehealth businesses. However, launching a healthcare brand is complex. OpenLoop provides the platform behind these healthcare brands.
-                </ContentParagraph>
+                <div className="mt-[var(--space-section-header-body)]">
+                  <ContentParagraph>
+                    OpenLoop helps companies build and run healthcare businesses by providing the clinical services, technology, and operational support behind them.
+                  </ContentParagraph>
+                </div>
 
                 <FigureFrame
                   src={telehealthLaunchWorkflowImg}
                   alt="Telehealth brand launch workflow from idea to optimisation"
                   wrapperClassName="mt-[var(--space-section-body-element)]"
                   variant="flush"
+                  caption={(
+                    <p className="case-caption-copy mt-[var(--space-text-stack)] text-center">
+                      OpenLoop supports the operational steps required to build and run a healthcare business.
+                    </p>
+                  )}
                 />              
 
                 <div className="mt-[var(--space-section-body-element)]">
                   <ContentParagraph>
-                    Built on top of OpenLoop's white-label telehealth infrastructure, LaunchPad uses AI to help brands go from idea to launch faster.
+                    As AI began reshaping the market, the question was where it could create new value for the business.
                   </ContentParagraph>
                 </div>
 

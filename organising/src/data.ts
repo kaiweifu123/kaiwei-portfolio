@@ -8,7 +8,7 @@ import { SectionItem } from './types';
 export const archiveData: SectionItem[] = [
   {
     id: 'PH-01',
-    title: 'Finding the Right Problem for AI',
+    title: 'Finding Growth in a Crowded AI Market',
     category: 'Research',
     sysId: 'The brief was open-ended.',
     dropCap: '',
