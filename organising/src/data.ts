@@ -8,13 +8,14 @@ import { SectionItem } from './types';
 export const archiveData: SectionItem[] = [
   {
     id: 'PH-01',
-    title: 'Can AI Create New Revenue?',
+    title: 'Finding the Right Problem for AI',
     category: 'Research',
-    sysId: 'Can AI Create New Revenue?',
-    dropCap: 'W',
-    dropCapText: 'e surveyed the AI landscape across healthcare and generated multiple product directions. On paper, many of them looked commercially attractive.',
+    sysId: 'The brief was open-ended.',
+    dropCap: '',
+    dropCapText: "We didn't set out to build a launch platform. The starting point was much more open-ended: exploring what AI could do for OpenLoop.",
     quote: '',
     paragraphs: [
+      'We surveyed the AI landscape across healthcare and generated multiple product directions. On paper, many of them looked commercially attractive.',
       'However, after discussing these ideas with customers and industry leaders at a healthcare conference, we realised the market was already crowded with similar solutions.'
     ],
     leadFaculty: [
@@ -31,11 +32,11 @@ export const archiveData: SectionItem[] = [
     category: 'Opportunity',
     sysId: 'AI 如何让更多人开出自己的线上医疗品牌？',
     dropCap: 'O',
-    dropCapText: 'penLoop 背后已经有一套把线上医疗业务跑起来的能力：找到合适的医生，处理问诊 and 审核，把处方交给药房履约，并确保整个流程符合医疗合规要求。',
+    dropCapText: 'penLoop 背后已经有一套把线上医疗业务跑起来的能力：找到合适的医生，处理问诊与审核，把处方交给药房履约，并确保整个流程符合医疗合规要求。',
     quote: '用 AI 把这些复杂的医疗运营能力变得更容易配置、启动和运营，帮助没有医疗能力的人，从一个模糊的商业想法，走到一个可以上线的 telehealth brand。',
     paragraphs: [
       '过去，这些能力主要服务成熟企业。它们已经有品牌、网站、获客渠道和运营团队，接入 OpenLoop 是为了在原有业务上增加医疗服务。',
-      '但市场正在变化。创作者、influencer、小型 wellness 品牌和健康领域创业者，越来越容易建立自己的受众 and 社区。他们有 audience。但他们没有能力快速建立一家 telehealth business。'
+      '但市场正在变化。创作者、influencer、小型 wellness 品牌和健康领域创业者，越来越容易建立自己的受众和社区。他们有 audience。但他们没有能力快速建立一家 telehealth business。'
     ],
     leadFaculty: [
       '核心赋能: 整合医生、药房及合规履约链路',
@@ -89,16 +90,16 @@ export const archiveData: SectionItem[] = [
     category: 'Users Feedback',
     sysId: '外部验证 // MARKET SIGNAL',
     dropCap: '就',
-    dropCapText: '在团队等待合规审批的过程中，市场突然给了我们一个意想不到的信号。',
+    dropCapText: '在产品准备正式上线的过程中，市场突然给了我们一个意想不到的信号。',
     quote: 'Within two days, more than 50 clients reached out.',
     paragraphs: [
       '作为 OpenLoop 的客户，MedVi，一家一人医疗 AI 公司，在短时间内迅速走红，并被 NYTimes 等媒体报道。随着关注度不断上升，越来越多人开始注意到支撑 MedVi 背后的基础设施和运营能力。',
-      '很快，经过 AI 重构的 onboarding 流程像迎接洪峰一样，迎来了第一批真实客户。',
+      '很快，刚上线的 onboarding 流程像迎接洪峰一样，迎来了第一批真实客户。',
       '然而他们反馈的重点，与团队此前预判的风险几乎完全不同。'
     ],
     leadFaculty: [
-      '认知降噪机制: 设计 4 大决策降载原则',
-      'Onboarding 大重构项目部署'
+      '真实客户涌入: 两天内 50+ 客户主动接洽',
+      '反馈错位: 真实问题与团队预判完全不同'
     ],
     requirement: ['用户测试', '认知负担', 'Onboarding Redesign', '设计原则'],
     location: '体验实验室与可用性观察站',
@@ -110,7 +111,7 @@ export const archiveData: SectionItem[] = [
     category: 'Iteration',
     sysId: '最好的 AI 不一定最显眼。',
     dropCap: 'I',
-    dropCapText: 'In the first demo, AI Chat played an important role. It made the product feel intelligent, and it helped stakeholders immediately understand that AI was part of the experience. But real onboarding is not a demo. Users are not there to explore AI. They are there to complete setup, submit for review, and launch as quickly as possible.',
+    dropCapText: 'n the first demo, AI Chat played an important role. It made the product feel intelligent, and it helped stakeholders immediately understand that AI was part of the experience. But real onboarding is not a demo. Users are not there to explore AI. They are there to complete setup, submit for review, and launch as quickly as possible.',
     quote: 'Sometimes the best AI is the one that does not pull attention away from the task.',
     paragraphs: [],
     leadFaculty: [
