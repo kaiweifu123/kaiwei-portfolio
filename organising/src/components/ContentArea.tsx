@@ -542,12 +542,16 @@ function ResultSnapshot() {
 
   return (
     <section className="case-card case-surface-base overflow-hidden">
-      <div className="grid md:grid-cols-4">
+      <div className="grid grid-cols-2 md:grid-cols-4">
         {metrics.map((metric, index) => (
           <div
             key={metric.label}
             className={`p-[var(--space-card-lg)] ${
-              index > 0 ? 'border-t border-[var(--border-soft-color)] md:border-l md:border-t-0' : ''
+              index > 1 ? 'border-t border-[var(--border-soft-color)]' : ''
+            } ${
+              index % 2 === 1 ? 'border-l border-[var(--border-soft-color)]' : ''
+            } ${
+              index > 0 ? 'md:border-l md:border-t-0' : ''
             }`}
           >
             <div className="case-result-value">{metric.value}</div>
@@ -937,7 +941,8 @@ export default function ContentArea({
                     {/* PHASE 2: INFRASTRUCTURE DIAGRAM */}
                     {item.id === 'PH-02' && (
                       <div className="case-visual-block flex flex-col gap-[var(--space-section-body-element)]">
-                          <section className="grid grid-cols-1 gap-[var(--space-section-body-element)] md:grid-cols-2">
+                          <section className="case-card overflow-hidden bg-[var(--surface-base)]">
+                            <div className="grid grid-cols-1 md:grid-cols-2">
                             {[
                               {
                                 tag: 'Past customer base',
@@ -954,8 +959,8 @@ export default function ContentArea({
                             ].map((customer, customerIndex) => (
                               <div
                                 key={customer.name}
-                                className={`case-card p-[var(--space-lg)] ${
-                                  customerIndex === 1 ? 'border-[var(--border-default-color)]' : 'border-[var(--border-soft-color)]'
+                                className={`p-[var(--space-lg)] ${
+                                  customerIndex === 1 ? 'border-t border-[var(--border-soft-color)] md:border-l md:border-t-0' : ''
                                 }`}
                               >
                                 <span className="case-badge case-badge-neutral mb-[var(--space-sm)]">
@@ -967,7 +972,7 @@ export default function ContentArea({
                                 <p className="case-card-support mt-[var(--space-sm)] min-h-[54px]">
                                   {customer.description}
                                 </p>
-                                <div className="mt-[var(--space-section-body-element)] grid grid-cols-1 gap-[3px] sm:grid-cols-3">
+                                <div className="mt-[var(--space-card-gap)] grid grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] gap-[3px]">
                                   {[
                                     ['Setup tech', 'Storefront + intake'],
                                     ['Clinical ops', 'Clinical + pharmacy'],
@@ -998,6 +1003,7 @@ export default function ContentArea({
                                 </div>
                               </div>
                             ))}
+                            </div>
                           </section>
 
                           <section className="border-t border-[var(--border-soft-color)] pt-[var(--space-section-body-element)]">

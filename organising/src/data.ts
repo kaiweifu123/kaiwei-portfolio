@@ -8,7 +8,7 @@ import { SectionItem } from './types';
 export const archiveData: SectionItem[] = [
   {
     id: 'PH-01',
-    title: 'Finding Growth in a Crowded AI Market',
+    title: 'Finding Growth in a Crowded AI Healthcare Market',
     category: 'Research',
     sysId: 'The brief was open-ended.',
     dropCap: '',
@@ -28,7 +28,7 @@ export const archiveData: SectionItem[] = [
   },
   {
     id: 'PH-02',
-    title: 'The Opportunity Was Already There',
+    title: 'The Unique Opportunity Was Already There',
     category: 'Opportunity',
     sysId: 'AI 如何让更多人开出自己的线上医疗品牌？',
     dropCap: 'O',

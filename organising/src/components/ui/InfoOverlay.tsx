@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Check, Copy, Download, X } from 'lucide-react';
+import { Check, Copy, Download, Linkedin, X } from 'lucide-react';
 
 function ExperienceSection() {
   return (
@@ -53,6 +53,7 @@ function ExperienceSection() {
 export default function InfoOverlay({ onClose }: { onClose: () => void }) {
   const [hasCopiedEmail, setHasCopiedEmail] = useState(false);
   const emailAddress = 'kaiweifu2022@gmail.com';
+  const linkedInUrl = 'https://www.linkedin.com/in/kaiwei-fu-b10474239';
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -113,8 +114,7 @@ export default function InfoOverlay({ onClose }: { onClose: () => void }) {
             transforming fragmented workflows into intuitive products that improve efficiency, trust, and conversion.
           </p>
         </div>
-        <ExperienceSection />
-        <footer className="info-panel-contact">
+        <section className="info-panel-contact" aria-label="Contact">
           <h3>Contact</h3>
           <div className="info-contact-actions">
             <div className="info-email-row">
@@ -128,8 +128,13 @@ export default function InfoOverlay({ onClose }: { onClose: () => void }) {
                 {hasCopiedEmail ? <Check aria-hidden="true" size={15} strokeWidth={2.2} /> : <Copy aria-hidden="true" size={15} strokeWidth={2.2} />}
               </button>
             </div>
+            <a className="info-contact-link" href={linkedInUrl} target="_blank" rel="noreferrer">
+              <Linkedin aria-hidden="true" size={15} strokeWidth={2.1} />
+              <span>LinkedIn</span>
+            </a>
           </div>
-        </footer>
+        </section>
+        <ExperienceSection />
       </section>
     </div>
   );
