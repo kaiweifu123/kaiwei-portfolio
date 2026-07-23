@@ -8,3 +8,7 @@ server.js
 *.log
 .env*
 !.env.example
+
+# Local source recordings; deploy the optimized MP4 exports instead.
+public/case-assets/design-system-original-demo.mov
+public/case-assets/design-system-original-demo-v2.mov

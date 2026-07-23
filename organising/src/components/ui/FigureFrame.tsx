@@ -13,6 +13,7 @@ interface FigureFrameProps {
   wrapperClassName?: string;
   frameClassName?: string;
   imageClassName?: string;
+  videoPreload?: React.VideoHTMLAttributes<HTMLVideoElement>['preload'];
   caption?: React.ReactNode;
   referrerPolicy?: React.ImgHTMLAttributes<HTMLImageElement>['referrerPolicy'];
   variant?: 'default' | 'flush';
@@ -24,6 +25,7 @@ export default function FigureFrame({
   wrapperClassName,
   frameClassName = 'overflow-hidden border border-[var(--border-frame-color)] bg-[var(--surface-base)]',
   imageClassName = 'block w-full',
+  videoPreload = 'none',
   caption,
   referrerPolicy,
   variant = 'default',
@@ -31,9 +33,11 @@ export default function FigureFrame({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const videoRef = useInViewVideo<HTMLVideoElement>(isVideoSource(src));
   const mediaLoaded = useMediaLoadedClass();
-  const resolvedFrameClassName = variant === 'flush'
-    ? 'media-skeleton relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--surface-base)]'
-    : `media-skeleton ${frameClassName}`;
+  const resolvedFrameClassName = frameClassName === ''
+    ? ''
+    : variant === 'flush'
+      ? 'media-skeleton relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--surface-base)]'
+      : `media-skeleton ${frameClassName}`;
 
   const media = isVideoSource(src) ? (
     <video
@@ -44,7 +48,7 @@ export default function FigureFrame({
       muted
       loop
       playsInline
-      preload="none"
+      preload={videoPreload}
       onLoadedData={mediaLoaded.onLoadedData}
     />
   ) : (

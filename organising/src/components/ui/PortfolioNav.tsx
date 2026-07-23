@@ -18,6 +18,7 @@ type PortfolioNavProps = {
 
 const productDesignLinks = [
   { label: 'Launchpad Platform', href: '/preview.html' },
+  { label: 'White-label Design Systems for the AI Era', href: '/case/design-system/' },
   { label: 'Patient CRM', href: '/patient-crm/' },
   { label: 'Hireable AI CV Builder', href: '/case/hireable/' },
   { label: 'Reading Rep Online Giving', href: '/case/reading-rep/' },

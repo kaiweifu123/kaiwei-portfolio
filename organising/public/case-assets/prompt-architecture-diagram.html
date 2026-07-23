@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prompt architecture diagram</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --page: transparent;
+      --card: #ffffff;
+      --box: #fafafa;
+      --placeholder: #f5f5f5;
+      --text: #252525;
+      --muted: #737373;
+      --border-soft: #e5e5e5;
+      --border-box: #b8b8b8;
+      --border-dashed: #8f8f8f;
+      --artifact-shadow: 0 2px 8px rgb(18 18 18 / 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --card: #1d1d1d;
+        --box: #242424;
+        --placeholder: #202020;
+        --text: #f1f1f1;
+        --muted: #a3a3a3;
+        --border-soft: #363636;
+      --border-box: #555555;
+      --border-dashed: #777777;
+      --artifact-shadow: 0 2px 8px rgb(0 0 0 / 0.28);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-width: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-weight: 400;
+    }
+
+    .diagram {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .prompt-card {
+      padding: 16px 18px;
+      border: 0.5px solid var(--border-soft);
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: var(--artifact-shadow);
+    }
+
+    .card-title {
+      margin: 0 0 4px;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 500;
+    }
+
+    .divider {
+      height: 0.5px;
+      margin-bottom: 12px;
+      background: var(--border-soft);
+    }
+
+    .prompt-box {
+      width: 100%;
+      padding: 8px 10px;
+      border: 0.5px solid var(--border-box);
+      border-radius: 8px;
+      background: var(--box);
+      text-align: center;
+    }
+
+    .box-label {
+      margin: 0 0 3px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 400;
+    }
+
+    .box-content {
+      margin: 0;
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    .box-content.medium { font-weight: 500; }
+    .box-content.tokens { color: var(--muted); font-size: 11px; }
+
+    .connector {
+      margin: 2px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+      text-align: center;
+    }
+
+    .output {
+      display: flex;
+      min-width: 0;
+      height: 100%;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 28px;
+    }
+
+    .image-deck {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 1.469 / 1;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      appearance: none;
+    }
+
+    .deck-image {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: var(--artifact-shadow);
+      transform-origin: top center;
+      transition: transform 220ms ease, opacity 180ms ease;
+      will-change: transform, opacity;
+    }
+
+    .image-deck:focus-visible {
+      outline: 2px solid var(--text);
+      outline-offset: 4px;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 499px) {
+      .columns { grid-template-columns: 1fr; }
+      .output { min-height: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <figure class="diagram">
+    <div class="columns">
+      <section class="prompt-card" aria-labelledby="prompt-title">
+        <h2 class="card-title" id="prompt-title">Website hero image prompt</h2>
+        <div class="divider"></div>
+
+        <div class="prompt-box">
+          <p class="box-label">role</p>
+          <p class="box-content medium">documentary lifestyle photographer</p>
+        </div>
+        <div class="connector" aria-hidden="true">+</div>
+        <div class="prompt-box">
+          <p class="box-label">input tokens</p>
+          <p class="box-content tokens">colour · theme · activity · environment · ratio</p>
+        </div>
+        <div class="connector" aria-hidden="true">+</div>
+        <div class="prompt-box">
+          <p class="box-label">style rules</p>
+          <p class="box-content">film grain · natural light · shallow DOF</p>
+        </div>
+        <div class="connector" aria-hidden="true">+</div>
+        <div class="prompt-box">
+          <p class="box-label">constraints</p>
+          <p class="box-content">no filter · no CGI · real materials</p>
+        </div>
+      </section>
+
+      <section class="output" aria-label="Generated output">
+        <button class="image-deck" type="button" aria-label="Show next generated website hero image">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-01.jpg" alt="Generated wellness landing page hero in a desert setting">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-02.jpg" alt="Generated wellness landing page hero on a tennis court">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-03.jpg" alt="Generated wellness landing page hero in a pilates studio">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-04.jpg" alt="Generated wellness landing page hero in a countryside setting">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-05.jpg" alt="Generated wellness landing page hero by the sea">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-06.jpg" alt="Generated wellness landing page hero on a snow mountain">
+          <img class="deck-image" src="/case-assets/prompt-output-deck/hero-07.jpg" alt="Generated wellness landing page hero in a park">
+        </button>
+      </section>
+    </div>
+  </figure>
+  <script>
+    const deck = document.querySelector('.image-deck');
+    const deckImages = [...deck.querySelectorAll('.deck-image')];
+    let activeImage = 0;
+
+    const renderDeck = () => {
+      deckImages.forEach((image, index) => {
+        const depth = (index - activeImage + deckImages.length) % deckImages.length;
+        image.style.zIndex = String(deckImages.length - depth);
+        image.style.transform = `translateY(${-depth * 8}px) scale(${1 - depth * 0.008})`;
+        image.style.opacity = depth > 5 ? '0' : '1';
+      });
+    };
+
+    deck.addEventListener('click', () => {
+      const current = deckImages[activeImage];
+      current.style.transform = 'translateX(32px) rotate(1.5deg)';
+      current.style.opacity = '0';
+
+      window.setTimeout(() => {
+        activeImage = (activeImage + 1) % deckImages.length;
+        renderDeck();
+      }, 180);
+    });
+
+    const reportHeight = () => {
+      const height = document.querySelector('.diagram').getBoundingClientRect().height;
+      window.parent.postMessage({ type: 'prompt-architecture-height', height }, '*');
+    };
+
+    new ResizeObserver(reportHeight).observe(document.documentElement);
+    window.addEventListener('load', reportHeight);
+    document.querySelectorAll('img').forEach((image) => image.addEventListener('load', reportHeight));
+    renderDeck();
+    reportHeight();
+  </script>
+</body>
+</html>

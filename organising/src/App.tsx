@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ContentArea from './components/ContentArea';
 import SyllabusModalForm from './components/SyllabusModalForm';
 import DesignSystemPage from './components/DesignSystemPage';
+import LaunchpadDesignSystemCaseStudy from './components/LaunchpadDesignSystemCaseStudy';
 import PatientCrmCaseStudy from './components/PatientCrmCaseStudy';
 import PortfolioCasePage from './components/PortfolioCasePage';
 import HomePage from './components/HomePage';
@@ -62,6 +63,10 @@ export default function App() {
 
   if (portfolioCase) {
     return <PortfolioCasePage caseStudy={portfolioCase} />;
+  }
+
+  if (pathname === '/case/design-system') {
+    return <LaunchpadDesignSystemCaseStudy />;
   }
 
   if (pathname === '') {

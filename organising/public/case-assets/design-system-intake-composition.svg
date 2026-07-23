@@ -1,0 +1,55 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="1" y="1" width="1198" height="698" rx="24" fill="#FBFBFC" stroke="#E0E3EB" stroke-width="2"/>
+  <text x="48" y="72" fill="#171717" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700">Intake Builder</text>
+  <text x="48" y="108" fill="#6B7280" font-family="Inter, Arial, sans-serif" font-size="17">Reusable blocks become a program-specific patient flow.</text>
+
+  <text x="48" y="164" fill="#5C6475" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="1.2">REUSABLE BLOCKS</text>
+  <g font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#252830">
+    <rect x="48" y="190" width="230" height="76" rx="12" fill="white" stroke="#D9DDE6"/>
+    <text x="72" y="236">Question blocks</text>
+    <rect x="298" y="190" width="230" height="76" rx="12" fill="white" stroke="#D9DDE6"/>
+    <text x="322" y="236">Education pages</text>
+    <rect x="48" y="286" width="230" height="76" rx="12" fill="white" stroke="#D9DDE6"/>
+    <text x="72" y="332">Eligibility logic</text>
+    <rect x="298" y="286" width="230" height="76" rx="12" fill="white" stroke="#D9DDE6"/>
+    <text x="322" y="332">Consent</text>
+    <rect x="48" y="382" width="230" height="76" rx="12" fill="white" stroke="#D9DDE6"/>
+    <text x="72" y="428">Program content</text>
+    <rect x="298" y="382" width="230" height="76" rx="12" fill="white" stroke="#D9DDE6"/>
+    <text x="322" y="428">Branching flows</text>
+  </g>
+
+  <path d="M568 324H642" stroke="#E4382C" stroke-width="4" stroke-linecap="round"/>
+  <path d="M632 312L644 324L632 336" stroke="#E4382C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <text x="682" y="164" fill="#5C6475" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="1.2">COMPOSED EXPERIENCE</text>
+  <g font-family="Inter, Arial, sans-serif" font-size="17" font-weight="600" fill="#252830">
+    <rect x="682" y="190" width="420" height="62" rx="12" fill="white" stroke="#D9DDE6"/>
+    <circle cx="716" cy="221" r="12" fill="#FDE8E6"/>
+    <text x="746" y="227">Question</text>
+    <path d="M892 252V274" stroke="#A8AFBD" stroke-width="2"/>
+
+    <rect x="682" y="274" width="420" height="62" rx="12" fill="white" stroke="#D9DDE6"/>
+    <circle cx="716" cy="305" r="12" fill="#FDE8E6"/>
+    <text x="746" y="311">Education</text>
+    <path d="M892 336V358" stroke="#A8AFBD" stroke-width="2"/>
+
+    <rect x="682" y="358" width="420" height="62" rx="12" fill="white" stroke="#D9DDE6"/>
+    <circle cx="716" cy="389" r="12" fill="#FDE8E6"/>
+    <text x="746" y="395">Eligibility</text>
+    <path d="M892 420V442" stroke="#A8AFBD" stroke-width="2"/>
+
+    <rect x="682" y="442" width="198" height="62" rx="12" fill="white" stroke="#D9DDE6"/>
+    <circle cx="716" cy="473" r="12" fill="#EAF6EE"/>
+    <text x="746" y="479">Consent</text>
+    <rect x="904" y="442" width="198" height="62" rx="12" fill="white" stroke="#D9DDE6"/>
+    <circle cx="938" cy="473" r="12" fill="#F3F0FF"/>
+    <text x="968" y="479">Alternate path</text>
+  </g>
+  <path d="M892 420V431H781V442" stroke="#A8AFBD" stroke-width="2"/>
+  <path d="M892 431H1003V442" stroke="#A8AFBD" stroke-width="2"/>
+
+  <rect x="682" y="552" width="420" height="82" rx="14" fill="#171717"/>
+  <text x="892" y="588" text-anchor="middle" fill="white" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="1">ONE CONFIGURATION</text>
+  <text x="892" y="616" text-anchor="middle" fill="white" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">A distinct patient experience</text>
+</svg>

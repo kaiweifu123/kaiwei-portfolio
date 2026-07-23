@@ -47,12 +47,20 @@ const portfolioProjects: PortfolioProject[] = [
     href: '/preview.html',
   },
   {
+    title: 'White-label Design Systems for the AI Era',
+    image: '/case-assets/design-system-cover.jpg',
+    description: 'A governed design system for scalable, AI-generated white-label websites.',
+    highlights: ['governed design system', 'AI-generated'],
+    tags: ['Design Systems', 'AI', 'White-label', 'Healthcare'],
+    href: '/case/design-system/',
+  },
+  {
     title: 'Patient CRM',
     image: '/case-assets/crm.png',
     video: '/case-assets/crm-card.mp4',
     description: 'A telehealth CRM that unifies fragmented workflows, reducing hours of manual work to seconds.',
     highlights: ['hours', 'seconds'],
-    tags: ['SaaS', 'CRM', 'Telehealthcare', 'Strategy'],
+    tags: ['SaaS', 'CRM', 'Telehealthcare', 'Strategy', 'Multi-role UX'],
     href: '/patient-crm/',
   },
   {
@@ -123,7 +131,7 @@ export default function PortfolioWorkSection({
             <ul className="project-tags" aria-label={`${project.title} tags`}>
               {project.tags.map((tag) => (
                 <li key={tag}>
-                  <Pill>{tag}</Pill>
+                  <Pill variant="home">{tag}</Pill>
                 </li>
               ))}
             </ul>

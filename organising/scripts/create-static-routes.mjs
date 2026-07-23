@@ -18,6 +18,7 @@ const routes = [
   'case/reading-rep/index.html',
   'case/ohisama/index.html',
   'case/tfl-go/index.html',
+  'case/design-system/index.html',
 ];
 
 const distDir = join(process.cwd(), 'dist');

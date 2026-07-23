@@ -18,6 +18,11 @@ export const caseStudyPagerItems: ProjectPagerItem[] = [
     href: '/preview.html',
   },
   {
+    id: 'design-system',
+    title: 'White-label Design Systems for the AI Era',
+    href: '/case/design-system/',
+  },
+  {
     id: 'patient-crm',
     title: 'Patient CRM',
     href: '/patient-crm/',

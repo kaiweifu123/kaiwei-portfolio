@@ -213,6 +213,10 @@ body {
   background: var(--surface-section-subtle);
 }
 
+.case-hero-editorial-artifact-panel--no-divider {
+  border-left: 0;
+}
+
 .case-hero-editorial-artifact-panel--cover {
   align-items: stretch;
   justify-content: stretch;
@@ -2456,6 +2460,10 @@ body {
   letter-spacing: 0;
   line-height: var(--line-height-block);
   text-transform: none;
+}
+
+.portfolio-pill--home {
+  background: #fff;
 }
 
 .portfolio-pill-link {

@@ -17,6 +17,7 @@ type CaseHeroArtifact =
       background?: string;
       objectPosition?: string;
       onClick?: () => void;
+      showDivider?: boolean;
     }
   | {
       type: 'video';
@@ -130,6 +131,7 @@ function EditorialArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
   const heroArtifactPanelClassName = heroFit === 'cover'
     ? 'case-hero-editorial-artifact-panel case-hero-editorial-artifact-panel--cover'
     : 'case-hero-editorial-artifact-panel case-hero-editorial-artifact-panel--contain';
+  const dividerClassName = artifact.showDivider === false ? ' case-hero-editorial-artifact-panel--no-divider' : '';
   const heroFigureClassName = heroFit === 'cover'
     ? 'case-hero-editorial-figure case-hero-editorial-figure--cover'
     : 'case-hero-editorial-figure case-hero-editorial-figure--contain';
@@ -138,7 +140,7 @@ function EditorialArtifact({ artifact }: { artifact: CaseHeroArtifact }) {
     : 'case-hero-editorial-image case-hero-editorial-image--contain';
 
   return (
-    <div className={heroArtifactPanelClassName} style={artifact.background ? { backgroundColor: artifact.background } : undefined}>
+    <div className={`${heroArtifactPanelClassName}${dividerClassName}`} style={artifact.background ? { backgroundColor: artifact.background } : undefined}>
       <figure className={`${heroFigureClassName} media-skeleton`}>
         <img
           src={artifact.src}
