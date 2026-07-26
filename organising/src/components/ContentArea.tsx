@@ -31,6 +31,7 @@ import CaseStudyTopNav from './ui/CaseStudyTopNav';
 import CaseHero from './ui/CaseHero';
 import ContentBlock, { ContentLabel, ContentParagraph } from './ui/ContentBlock';
 import ProjectPager from './ui/ProjectPager';
+import AIUsagePopover, { type AIUsageItem } from './ui/AIUsagePopover';
 import { caseStudyPagerItems, getAdjacentPagerItems } from '../projectPagerItems';
 import workshopBoardImg from '../assets/images/AI CAPABILITY DIRECTION WORKSHOP - sep 2025.jpg';
 import userPersonaFormImg from '../assets/images/demo-steps/user-persona-form.jpg';
@@ -152,6 +153,126 @@ const sectionNavLabels: Record<string, string> = {
 };
 
 const sectionSignalLabels: Record<string, string> = {};
+
+const researchAIUsage: AIUsageItem[] = [
+  {
+    kind: 'market',
+    title: 'market scan',
+    description: 'Discover competitors, analyse trends, and identify market opportunities.',
+    tool: 'Perplexity',
+    mark: 'P',
+  },
+  {
+    kind: 'competitor',
+    title: 'competitor analysis',
+    description: 'Compare products, cluster capabilities, and evaluate strategic differentiation.',
+    tool: 'Claude',
+    mark: 'C',
+  },
+  {
+    kind: 'affinity',
+    title: 'affinity mapping',
+    description: 'Synthesise interviews and workshop notes into recurring themes and insights.',
+    tool: 'FigJam AI',
+    mark: 'F',
+  },
+  {
+    kind: 'documentation',
+    title: 'research documentation',
+    description: 'Transcribe, summarise, and organise customer conversations.',
+    tool: 'Granola',
+    mark: 'G',
+  },
+];
+
+const demoAIUsage: AIUsageItem[] = [
+  {
+    kind: 'concept',
+    title: 'Concept to Demo',
+    description: 'Turn an abstract product idea into a functional prototype.',
+    tool: 'Figma Make',
+    mark: 'F',
+  },
+  {
+    kind: 'exploration',
+    title: 'Design Exploration',
+    description: 'Generate multiple UI directions and quickly test the product vision.',
+    tool: 'Google AI Studio',
+    mark: 'G',
+  },
+  {
+    kind: 'iteration',
+    title: 'Rapid Iteration',
+    description: 'Refine flows and interactions through natural-language feedback.',
+    tool: 'Claude Code',
+    mark: 'C',
+  },
+];
+
+const designV1AIUsage: AIUsageItem[] = [
+  {
+    kind: 'inspiration',
+    title: 'Design Inspiration',
+    description: 'Explore website directions and visual styles from references.',
+    tool: 'Google AI Studio',
+    mark: 'G',
+  },
+  {
+    kind: 'operations',
+    title: 'Operational Design',
+    description: 'Pattern Exploration — Discover reusable UX and conversion patterns across products.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'system',
+    title: 'Design System',
+    description: 'Accelerate component creation, documentation, and design system governance.',
+    tool: 'Codex',
+    mark: 'C',
+  },
+];
+
+const userFeedbackAIUsage: AIUsageItem[] = [
+  {
+    kind: 'feedback',
+    title: 'Feedback Analysis',
+    description: 'Cluster user feedback into recurring themes and prioritise issues.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'knowledge',
+    title: 'Documentation',
+    description: 'Generate research summaries and maintain a searchable knowledge base.',
+    tool: 'Notion AI',
+    mark: 'N',
+  },
+];
+
+const iterationAIUsage: AIUsageItem[] = [
+  {
+    kind: 'directions',
+    title: 'Direction Expansion',
+    description: 'Generate multiple interface options in conversation, compare trade-offs, and refine promising directions.',
+    tool: 'Claude',
+    mark: 'C',
+  },
+  {
+    kind: 'tokens',
+    title: 'Token-bound Iteration',
+    description: 'By 2026, well-defined semantic token roles kept Codex and Figma Make outputs aligned with the design system.',
+    tool: 'Codex + Figma Make',
+    mark: 'CF',
+  },
+  {
+    kind: 'collaboration',
+    title: 'Role-aware Collaboration',
+    description: 'Use a PM’s Google AI Studio prototype as a statement of intent, then explore multiple design directions around it.',
+    tool: 'Google AI Studio',
+    mark: 'G',
+  },
+];
 
 interface ContentAreaProps {
   items: SectionItem[];
@@ -814,6 +935,19 @@ export default function ContentArea({
               isFocused={isFocused}
               signalLabel={sectionSignalLabels[item.id]}
               surface={index % 2 === 0 ? 'subtle' : 'base'}
+              headerAction={
+                item.id === 'PH-01'
+                  ? <AIUsagePopover items={researchAIUsage} />
+                  : item.id === 'PH-03'
+                    ? <AIUsagePopover items={demoAIUsage} />
+                    : item.id === 'PH-04'
+                      ? <AIUsagePopover items={designV1AIUsage} />
+                      : item.id === 'PH-05'
+                        ? <AIUsagePopover items={userFeedbackAIUsage} />
+                        : item.id === 'PH-06'
+                          ? <AIUsagePopover items={iterationAIUsage} />
+                    : undefined
+              }
             >
               {/* Left Column (Span 2/3): The Case Study Text + Rich Interactive Custom Infographic */}
                     <div className="case-narrative-flow min-w-0 text-[var(--text-primary)] lg:col-span-3">

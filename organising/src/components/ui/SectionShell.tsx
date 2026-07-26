@@ -17,6 +17,7 @@ interface SectionShellProps {
   signalLabel?: string;
   surface?: 'base' | 'subtle';
   hideHeader?: boolean;
+  headerAction?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -28,6 +29,7 @@ export default function SectionShell({
   signalLabel,
   surface = 'base',
   hideHeader = false,
+  headerAction,
   children,
 }: SectionShellProps) {
   return (
@@ -51,9 +53,12 @@ export default function SectionShell({
                   {signalLabel}
                 </span>
               ) : null}
-              <h2 className="case-heading max-w-[var(--container-content)] text-[length:var(--font-heading-md)] leading-[var(--line-height-heading)]">
-                {title}
-              </h2>
+              <div className="case-section-heading-row">
+                <h2 className="case-heading max-w-[var(--container-content)] text-[length:var(--font-heading-md)] leading-[var(--line-height-heading)]">
+                  {title}
+                </h2>
+                {headerAction}
+              </div>
             </>
           ) : null}
           <div className={hideHeader ? '' : 'mt-[var(--space-section-header-body)]'}>

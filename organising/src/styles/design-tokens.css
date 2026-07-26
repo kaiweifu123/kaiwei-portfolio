@@ -36,6 +36,7 @@ Last updated: 2026-06-25
   --surface-active-warm: var(--surface-section);
   --surface-active-cool: var(--surface-section);
   --surface-annotation: var(--surface-section);
+  --surface-ai-usage: #fdfbf4;
   --surface-sidebar: var(--surface-section);
   --surface-sidebar-hover: var(--surface-section);
   --surface-app-hover: var(--surface-section);
