@@ -13,6 +13,7 @@ import FigureFrame from './ui/FigureFrame';
 import LandingPageCompositionDiagram from './ui/LandingPageCompositionDiagram';
 import AutoHeightIframe from './ui/AutoHeightIframe';
 import ProjectPager from './ui/ProjectPager';
+import AIUsagePopover, { type AIUsageItem } from './ui/AIUsagePopover';
 import { caseStudyPagerItems, getAdjacentPagerItems } from '../projectPagerItems';
 
 type NarrativeBlock =
@@ -42,6 +43,47 @@ type NarrativeSection = {
   surface: 'base' | 'subtle';
   blocks: NarrativeBlock[];
 };
+
+const systemFoundationAIUsage: AIUsageItem[] = [
+  {
+    kind: 'tokens',
+    title: 'Token Management',
+    description: 'Standardise token naming and apply design tokens across components.',
+    tool: 'Codex',
+    mark: 'C',
+  },
+  {
+    kind: 'system',
+    title: 'Component Governance',
+    description: 'Define reusable corner radii, sizing, variants, and component properties.',
+    tool: 'Codex',
+    mark: 'C',
+  },
+];
+
+const designPrinciplesAIUsage: AIUsageItem[] = [
+  {
+    kind: 'system',
+    title: 'Rule Extraction',
+    description: 'Extract reusable design rules and document token application at the component level.',
+    tool: 'Codex',
+    mark: 'C',
+  },
+  {
+    kind: 'exploration',
+    title: 'Theme Generation',
+    description: 'Explore configurable brand themes while preserving design system constraints.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'iteration',
+    title: 'Prompt Optimisation',
+    description: 'Iterate prompt strategies to improve controllability and design consistency.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+];
 
 const sections: NarrativeSection[] = [
   {
@@ -422,6 +464,13 @@ export default function LaunchpadDesignSystemCaseStudy() {
             chapterLabel={section.label}
             isFocused={selectedId === section.id}
             surface={section.surface}
+            headerAction={
+              section.id === 'system'
+                ? <AIUsagePopover items={systemFoundationAIUsage} />
+                : section.id === 'design-principles'
+                  ? <AIUsagePopover items={designPrinciplesAIUsage} />
+                  : undefined
+            }
           >
             <div className="case-narrative-flow">
               {section.blocks.map((block, blockIndex) => {

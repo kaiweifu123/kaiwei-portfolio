@@ -40,7 +40,32 @@ const icons = {
 export default function AIUsagePopover({ items, label = 'How AI was used here' }: AIUsagePopoverProps) {
   const [isOpen, setIsOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const popoverId = useId();
+
+  const cancelClose = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+  };
+
+  const openPopover = () => {
+    cancelClose();
+    setIsOpen(true);
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimerRef.current = setTimeout(() => setIsOpen(false), 180);
+  };
+
+  const closePopover = () => {
+    cancelClose();
+    setIsOpen(false);
+  };
+
+  useEffect(() => () => cancelClose(), []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -64,8 +89,8 @@ export default function AIUsagePopover({ items, label = 'How AI was used here' }
     <div
       className="ai-usage-anchor"
       ref={anchorRef}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={openPopover}
+      onMouseLeave={scheduleClose}
     >
       <button
         className="ai-usage-trigger"
@@ -74,7 +99,10 @@ export default function AIUsagePopover({ items, label = 'How AI was used here' }
         aria-expanded={isOpen}
         aria-controls={popoverId}
         aria-haspopup="dialog"
-        onClick={() => setIsOpen((current) => !current)}
+        onClick={() => {
+          cancelClose();
+          setIsOpen((current) => !current);
+        }}
       >
         <Sparkle aria-hidden="true" />
       </button>
@@ -83,7 +111,7 @@ export default function AIUsagePopover({ items, label = 'How AI was used here' }
         <div className="ai-usage-popover" id={popoverId} role="dialog" aria-label={label}>
           <div className="ai-usage-popover-header">
             <p className="case-section-label">{label}</p>
-            <button className="ai-usage-close" type="button" aria-label="Close AI usage details" onClick={() => setIsOpen(false)}>
+            <button className="ai-usage-close" type="button" aria-label="Close AI usage details" onClick={closePopover}>
               <X aria-hidden="true" />
             </button>
           </div>

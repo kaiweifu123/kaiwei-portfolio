@@ -13,6 +13,7 @@ import FigureFrame from './ui/FigureFrame';
 import Lightbox from './ui/Lightbox';
 import Callout from './ui/Callout';
 import MetaGrid from './ui/MetaGrid';
+import AIUsagePopover, { type AIUsageItem } from './ui/AIUsagePopover';
 import { caseStudyPagerItems, getAdjacentPagerItems } from '../projectPagerItems';
 import {
   CaseStudyCardGrid,
@@ -51,6 +52,81 @@ const projectMetaItems = [
   { label: 'Team', values: ['4 developers', '1 PM'] },
   { label: 'Users', values: ['Patient support agents', 'Patient support managers'] },
   { label: 'Timeline', values: ['Feb 2026 - Present', 'Ongoing'] },
+];
+
+const researchAIUsage: AIUsageItem[] = [
+  {
+    kind: 'affinity',
+    title: 'Insight Synthesis',
+    description: 'Transform qualitative and quantitative research into actionable product insights.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'feedback',
+    title: 'Opportunity Prioritisation',
+    description: 'Cluster recurring issues and rank improvement opportunities by impact.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+];
+
+const conceptWorkflowAIUsage: AIUsageItem[] = [
+  {
+    kind: 'affinity',
+    title: 'Information Architecture',
+    description: 'Rapidly transform product concepts into structured IA and user flows.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'concept',
+    title: 'Prototype Validation',
+    description: 'Build interactive prototypes to align product direction with PMs before detailed design.',
+    tool: 'Google AI Studio',
+    mark: 'G',
+  },
+];
+
+const managerResistanceAIUsage: AIUsageItem[] = [
+  {
+    kind: 'exploration',
+    title: 'Concept Exploration',
+    description: 'Generate and compare multiple product concepts before committing to a direction.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'concept',
+    title: 'Rapid Prototyping',
+    description: 'Build interactive prototypes for concept testing and stakeholder feedback.',
+    tool: 'Google AI Studio',
+    mark: 'G',
+  },
+  {
+    kind: 'operations',
+    title: 'Design Operations',
+    description: 'Organise design files, generate specifications, and streamline design handoff.',
+    tool: 'Codex',
+    mark: 'C',
+  },
+];
+
+const testingAIUsage: AIUsageItem[] = [
+  {
+    kind: 'feedback',
+    title: 'Pattern Detection',
+    description: 'Identify recurring behaviours and validate design assumptions.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
+  {
+    kind: 'affinity',
+    title: 'Insight Prioritisation',
+    description: 'Prioritise improvements based on user feedback and testing outcomes.',
+    tool: 'ChatGPT',
+    mark: 'C',
+  },
 ];
 
 interface PatientCrmSection {
@@ -478,6 +554,17 @@ export default function PatientCrmCaseStudy() {
           chapterLabel="PATIENT CRM"
           isFocused={false}
           surface={index % 2 === 0 ? 'subtle' : 'base'}
+          headerAction={
+            section.id === 'crm-research'
+              ? <AIUsagePopover items={researchAIUsage} />
+              : section.id === 'crm-manager-resistance'
+                ? <AIUsagePopover items={conceptWorkflowAIUsage} />
+                : section.id === 'crm-manager-resistance-problem'
+                  ? <AIUsagePopover items={managerResistanceAIUsage} />
+                  : section.id === 'crm-testing'
+                    ? <AIUsagePopover items={testingAIUsage} />
+                    : undefined
+          }
         >
           {section.id === 'crm-context' ? (
             <div className="case-narrative-flow">
