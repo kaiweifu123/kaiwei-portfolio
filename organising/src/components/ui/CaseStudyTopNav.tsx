@@ -87,8 +87,12 @@ export default function CaseStudyTopNav({
   }, [collapseThreshold, scrollRootId]);
 
   useEffect(() => {
-    const activeItem = innerRef.current?.querySelector<HTMLElement>('.case-study-top-nav-item.active');
-    activeItem?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    const inner = innerRef.current;
+    const activeItem = inner?.querySelector<HTMLElement>('.case-study-top-nav-item.active');
+    if (!inner || !activeItem) return;
+
+    const targetLeft = activeItem.offsetLeft - (inner.clientWidth - activeItem.offsetWidth) / 2;
+    inner.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
   }, [selectedId]);
 
   return (
