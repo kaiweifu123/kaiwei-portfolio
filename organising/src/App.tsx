@@ -223,9 +223,11 @@ export default function App() {
     const el = document.getElementById(anchorId);
     const container = containerRef.current;
     if (el && container) {
-      const relativeTop = el.offsetTop - getStickyStackHeight() - 16;
+      const containerTop = container.getBoundingClientRect().top;
+      const targetTop = el.getBoundingClientRect().top;
+      const relativeTop = container.scrollTop + targetTop - containerTop - getStickyStackHeight() - 16;
       container.scrollTo({
-        top: relativeTop,
+        top: Math.max(0, relativeTop),
         behavior: 'smooth',
       });
       window.history.replaceState(null, '', `#${anchorId}`);

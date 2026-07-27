@@ -399,7 +399,10 @@ export default function LaunchpadDesignSystemCaseStudy() {
     document.body.classList.remove('case-study-chrome-collapsed');
 
     const handleScroll = () => {
-      const marker = window.scrollY + 160;
+      const stickyStackHeight = Array.from(
+        document.querySelectorAll<HTMLElement>('.editorial-header, .case-study-top-nav')
+      ).reduce((total, element) => total + element.offsetHeight, 0);
+      const marker = window.scrollY + stickyStackHeight + 32;
       let nextId = sections[0].id;
 
       for (const section of sections) {
@@ -416,8 +419,17 @@ export default function LaunchpadDesignSystemCaseStudy() {
   }, []);
 
   const handleSelect = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     setSelectedId(id);
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const stickyStackHeight = Array.from(
+      document.querySelectorAll<HTMLElement>('.editorial-header, .case-study-top-nav')
+    ).reduce((total, stickyElement) => total + stickyElement.offsetHeight, 0);
+    window.scrollTo({
+      top: element.offsetTop - stickyStackHeight - 16,
+      behavior: 'smooth',
+    });
   };
 
   return (
