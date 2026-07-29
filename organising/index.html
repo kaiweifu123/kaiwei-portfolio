@@ -67,6 +67,54 @@
         will-change: opacity;
       }
 
+      .page-loader__statement {
+        position: absolute;
+        top: 76px;
+        left: 22px;
+        display: flex;
+        align-items: center;
+        gap: 0.28em;
+        font-family: "Graphik", "Graphik Web", "Helvetica Neue", Arial, sans-serif;
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -0.045em;
+        white-space: nowrap;
+      }
+
+      .page-loader__word-window {
+        position: relative;
+        width: 0;
+        height: 1.08em;
+        overflow: hidden;
+        perspective: 480px;
+        transition: width 460ms var(--page-loader-ease);
+      }
+
+      .page-loader__word,
+      .page-loader__word-sizer {
+        white-space: nowrap;
+      }
+
+      .page-loader__word {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        color: var(--loader-word-color);
+        backface-visibility: hidden;
+        transform-origin: center center;
+        will-change: transform, opacity;
+      }
+
+      .page-loader__word-sizer {
+        position: fixed;
+        top: -100vh;
+        left: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
       #page-loader[data-done="true"] .page-loader__inner {
         opacity: 0;
       }
@@ -76,7 +124,7 @@
         top: var(--page-loader-line-top);
         right: var(--page-loader-edge);
         left: var(--page-loader-edge);
-        height: 2px;
+        height: 4px;
         overflow: hidden;
         background: var(--page-loader-track);
       }
@@ -120,7 +168,20 @@
           transition: none;
           transform: scaleX(1);
         }
+
+        .page-loader__word-window {
+          transition: none;
+        }
       }
+
+      @media (max-width: 720px) {
+        .page-loader__statement {
+          top: 48px;
+          right: 22px;
+          font-size: clamp(28px, 7.5vw, 42px);
+        }
+      }
+
     </style>
     <script>
       (() => {
@@ -130,7 +191,8 @@
           if (!Number.isFinite(value)) return fallback;
           return raw.endsWith('ms') ? value : value * 1000;
         };
-        const threshold = readMs('--page-loader-threshold', 300);
+        const loaderPreview = new URLSearchParams(window.location.search).has('loader-preview');
+        const threshold = loaderPreview ? 0 : readMs('--page-loader-threshold', 300);
         const minVisible = readMs('--page-loader-min-visible', 650);
         const duration = readMs('--page-loader-progress-duration', 4000);
         const exitHold = readMs('--page-loader-exit-hold', 150);
@@ -143,6 +205,72 @@
         let shownAt = 0;
         let loader;
         let count;
+        let wordTimer = 0;
+        let wordAnimation;
+
+        const loaderWords = [
+          { label: 'seek', color: '#1473e6' },
+          { label: 'break', color: '#ef4b32' },
+          { label: 'ask', color: '#16a36a' },
+          { label: 'build', color: '#d47b00' },
+          { label: 'dream', color: '#d83bd2' },
+          { label: 'wander', color: '#008ca8' },
+          { label: 'create', color: '#7147d9' },
+          { label: 'play', color: '#8b9400' },
+          { label: 'push', color: '#ed1853' }
+        ];
+
+        const startWordLoop = () => {
+          const word = loader?.querySelector('.page-loader__word');
+          const sizer = loader?.querySelector('.page-loader__word-sizer');
+          const wordWindow = loader?.querySelector('.page-loader__word-window');
+          if (!word || !sizer || !wordWindow) return;
+          let wordIndex = 4;
+
+          const setWord = (index) => {
+            const item = loaderWords[index];
+            word.textContent = item.label;
+            word.style.setProperty('--loader-word-color', item.color);
+            sizer.textContent = item.label;
+            wordWindow.style.width = `${Math.ceil(sizer.getBoundingClientRect().width)}px`;
+          };
+
+          const scheduleWord = () => {
+            clearTimeout(wordTimer);
+            if (done || reduceMotion) return;
+            wordTimer = window.setTimeout(flipWord, 820);
+          };
+
+          const flipWord = async () => {
+            const nextIndex = (wordIndex + 1) % loaderWords.length;
+            const exitAnimation = word.animate([
+              { transform: 'translateY(0) rotateX(0deg)', opacity: 1 },
+              { transform: 'translateY(-62%) rotateX(76deg)', opacity: 0 }
+            ], { duration: 270, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' });
+            wordAnimation = exitAnimation;
+            await exitAnimation.finished.catch(() => {});
+            if (done) return;
+
+            wordIndex = nextIndex;
+            setWord(wordIndex);
+            const enterAnimation = word.animate([
+              { transform: 'translateY(62%) rotateX(-76deg)', opacity: 0 },
+              { transform: 'translateY(0) rotateX(0deg)', opacity: 1 }
+            ], { duration: 350, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'forwards' });
+            wordAnimation = enterAnimation;
+            exitAnimation.cancel();
+            await enterAnimation.finished.catch(() => {});
+            if (enterAnimation.playState === 'finished') {
+              enterAnimation.commitStyles();
+              enterAnimation.cancel();
+            }
+            scheduleWord();
+          };
+
+          setWord(wordIndex);
+          document.fonts?.ready.then(() => setWord(wordIndex));
+          scheduleWord();
+        };
 
         const setProgress = (value) => {
           if (!loader || !count) return;
@@ -152,9 +280,12 @@
         };
 
         const finish = () => {
+          if (loaderPreview) return;
           if (done) return;
           done = true;
           cancelAnimationFrame(raf);
+          clearTimeout(wordTimer);
+          wordAnimation?.cancel();
           window.__finishPageLoader = finish;
           if (!shown || !loader) return;
           const visibleFor = performance.now() - shownAt;
@@ -175,7 +306,7 @@
           const elapsed = Math.min(1, (time - startedAt) / duration);
           const eased = 1 - Math.pow(1 - elapsed, 4);
           setProgress(eased * 90);
-          raf = requestAnimationFrame(tick);
+          if (elapsed < 1) raf = requestAnimationFrame(tick);
         };
 
         const show = () => {
@@ -184,10 +315,11 @@
           shownAt = performance.now();
           document.body.insertAdjacentHTML(
             'afterbegin',
-            '<div id="page-loader" aria-hidden="true"><div class="page-loader__inner"><div class="page-loader__meter"><div class="page-loader__bar"></div></div><div class="page-loader__count">0%</div></div></div>'
+            '<div id="page-loader" aria-hidden="true"><div class="page-loader__inner"><div class="page-loader__statement"><span>To</span><span class="page-loader__word-window"><span class="page-loader__word-sizer"></span><span class="page-loader__word"></span></span><span>is to resist stasis.</span></div><div class="page-loader__meter"><div class="page-loader__bar"></div></div><div class="page-loader__count">0%</div></div></div>'
           );
           loader = document.getElementById('page-loader');
           count = loader?.querySelector('.page-loader__count');
+          startWordLoop();
           setProgress(reduceMotion ? 100 : 0);
           requestAnimationFrame(() => {
             if (!loader || done) return;
