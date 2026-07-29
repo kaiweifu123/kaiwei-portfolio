@@ -95,6 +95,7 @@ export default function AIUsagePopover({ items, label = 'How AI was used here' }
       <button
         className="ai-usage-trigger"
         type="button"
+        data-sound="sparkle"
         aria-label={label}
         aria-expanded={isOpen}
         aria-controls={popoverId}

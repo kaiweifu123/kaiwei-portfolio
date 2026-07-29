@@ -28,11 +28,11 @@ export default function CaseSegmentTabs({
           <button
             key={item.id ?? item.label}
             type="button"
+            data-sound="tab"
             onClick={() => onChange(index)}
             className={`case-segment-tab ${isActive ? 'active' : ''}`}
             aria-pressed={isActive}
           >
-            <span className="case-segment-tab-index">{item.number}</span>
             <span className="case-segment-tab-label">{item.label}</span>
           </button>
         );

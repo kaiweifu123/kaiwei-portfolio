@@ -121,6 +121,7 @@ export default function InfoOverlay({ onClose }: { onClose: () => void }) {
               <a href={`mailto:${emailAddress}`}>{emailAddress}</a>
               <button
                 className="info-copy-button"
+                data-sound="copy"
                 type="button"
                 onClick={handleCopyEmail}
                 aria-label={hasCopiedEmail ? 'Email copied' : 'Copy email address'}

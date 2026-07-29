@@ -48,6 +48,7 @@ export default function PillTabs({
           <button
             key={item.id ?? item.label}
             type="button"
+            data-sound="tab"
             onClick={() => onChange(index)}
             className={`${buttonClassName} ${isActive ? activeButtonClassName : inactiveButtonClassName}`}
           >
